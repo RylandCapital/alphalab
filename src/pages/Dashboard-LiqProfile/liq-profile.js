@@ -75,12 +75,10 @@ class AprTrackerShort extends React.Component {
     super(props);
     this.state = {
       data: [],
-      tickerOptions: [],
-      tickerOptions2: [],
       tokenAddresses: {},
       rowData: [],
       rowData2: [],
-      selectedDate: new Date(),
+      selectedDate: [new Date()],
       longDates: [dayjs().subtract(6, "month").toDate(), dayjs().toDate()],
       reports: [
         {
@@ -125,6 +123,7 @@ class AprTrackerShort extends React.Component {
     this.timer3 = null;
     this.clearTimer = this.clearTimer.bind(this);
     this.scheduleFetch = this.scheduleFetch.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   async fetchData() {
@@ -221,10 +220,10 @@ class AprTrackerShort extends React.Component {
 
   handleChange(selectedOption) {
     
-    let newDate = new Date(selectedOption)
-    console.log(newDate)
+    let newDate = selectedOption
+    console.log(selectedOption)
     this.setState({
-      selectedDate: new Date(newDate)
+      selectedDate: newDate
     }, () => this.fetchHistoricalProfile())
   }
 
