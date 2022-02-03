@@ -9,7 +9,6 @@ import AppRoute from "./routes/route";
 
 // layouts
 import VerticalLayout from "./components/VerticalLayout/";
-import HorizontalLayout from "./components/HorizontalLayout/";
 
 // Import scss
 import "./assets/scss/theme.scss";
