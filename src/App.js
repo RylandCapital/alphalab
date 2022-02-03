@@ -14,12 +14,6 @@ import HorizontalLayout from "./components/HorizontalLayout/";
 // Import scss
 import "./assets/scss/theme.scss";
 
-// Import fackbackend Configuration file
-import fakeBackend from "./helpers/AuthType/fakeBackend";
-
-// Activating fake backend
-fakeBackend();
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -32,15 +26,6 @@ class App extends Component {
    */
   getLayout = () => {
     let layoutCls = VerticalLayout;
-
-    switch (this.props.layout.layoutType) {
-      case "horizontal":
-        layoutCls = HorizontalLayout;
-        break;
-      default:
-        layoutCls = VerticalLayout;
-        break;
-    }
     return layoutCls;
   };
 
