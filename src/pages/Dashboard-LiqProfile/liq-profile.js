@@ -191,19 +191,47 @@ class AprTrackerShort extends React.Component {
         return {
           Luna_Liquidation_Price: obj.Luna_Liquidation_Price,
           Loan_Value: obj.Loan_Value,
+          collateral_value: obj.collateral_value,
+          ltv: obj.ltv,
+          percent_of_loans: obj.percent_of_loans,
+          luna_price: obj.luna_price,
+          bigrisk: obj.bigrisk,
+          areatowatch: obj.areatowatch
+
         };
       });
       this.setState(_ => ({
         data: formattedData,
+        rowData: formattedData 
       }));
       console.log(this.state.data);
       this.clearTimer();
+
+      let newState = JSON.parse(JSON.stringify(this.state));
+    newState.reports[0].value =
+      "Luna - $" +
+      Number(formattedData[0]["luna_price"]).toLocaleString("en-US", {
+        maximumFractionDigits: 2,
+      });
+    newState.reports[1].value =
+      "Luna - $" +
+      Number(formattedData[0]["bigrisk"]).toLocaleString("en-US", {
+        maximumFractionDigits: 2,
+      });
+    newState.reports[2].value =
+      "Luna - $" +
+      Number(formattedData[0]["areatowatch"]).toLocaleString("en-US", {
+        maximumFractionDigits: 2,
+      });
+    this.setState(newState);
     });
   }
 
   clearTimer() {
     if (this.timer) {
       clearTimeout(this.timer);
+      clearTimeout(this.timer2);
+      clearTimeout(this.timer3);
       this.timer = null;
       this.timer2 = null;
       this.timer3 = null;

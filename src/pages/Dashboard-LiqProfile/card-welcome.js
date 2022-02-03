@@ -27,7 +27,10 @@ class CardWelcome extends Component {
                       <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
                       Use Higher Loan Nodes as Support or Areas to Place Liquidatuion Bids at Higher Premiums
                     </p>
+                    <p className="mb-1">
                     <Label className="control-label">*** HISTORICAL DATABASE STARTS 2/3/2022 ***</Label>
+                    </p>
+                    <Label className="control-label">*** REFRESH TO GET BACK TO LIVE PROFILE ***</Label>
                   </div>
                 </div>
               </Col>
