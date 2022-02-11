@@ -31,10 +31,10 @@ const LineChart = (props) => {
                   <Select
                     classNamePrefix="form-control"
                     placeholder="TYPE or CHOOSE ..."
-                    title="mAsset"
                     options={props.tickers}
-                    defaultValue={props.tickers.length ? props.tickers[0] : null}
+                    defaultValue={props.defaultOption}
                     onChange={props.onAssetChange}
+                    value={props.asset}
                   />
                 </FormGroup>
                 <FormGroup className="w-25 d-inline-block pb-2 me-2">
