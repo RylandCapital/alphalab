@@ -1,11 +1,11 @@
 import * as api from '../../helpers/api_helper'
 
 const getHistoricalLongAprs = (filters) => {
-  return api.get(`/historical/longaprs/${filters.ticker}`, { params: filters })
+  return api.get(`/historical/mirror/longaprs/${filters.ticker}`, { params: filters })
 }
 
 const getHistoricalShortAprs = (filters) => {
-  return api.get(`/historical/shortaprs/${filters.ticker}`, { params: filters })
+  return api.get(`/historical/mirror/shortaprs/${filters.ticker}`, { params: filters })
 }
 const getHistoricalTerraDash = (filters) => {
   return api.get(`/historical/terradashboard/${filters.ticker}`, { params: filters })
