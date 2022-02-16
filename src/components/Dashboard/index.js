@@ -49,7 +49,11 @@ const Dashboard = (props) => {
     const reportData = []
     for (let i = 0; i < reports.length; i ++) {
       const report = reports[i];
-      const value = await fetchData(report, props.widgetFormatter, props.fieldKey);
+      let formatter = props.widgetFormatter;
+      if (typeof props.widgetFormatter(0) === 'function') {
+        formatter = props.widgetFormatter(i);
+      }
+      const value = await fetchData(report, formatter, props.fieldKey);
       reportData.push({
         ...report,
         value
@@ -58,8 +62,24 @@ const Dashboard = (props) => {
     setReports(reportData);
   }, []);
 
+  // prevent scrolling on the page when in fullscreen mode
+  const [styles, setStyles] = useState({});
+  useEffect(() => {
+    if (overflowLockContext.isOverflowLock) {
+      setStyles({
+        position: 'fixed',
+        top: `${window.scrollY}px`,
+      });
+    } else {
+      setStyles({
+        position: '',
+        top: '',
+      });
+    }
+  }, [overflowLockContext.isOverflowLock]);
+
   return (
-    <div style={props.style} className="page-content">
+    <div style={styles} className="page-content">
       <Container fluid>
         <Breadcrumbs title={props.title} breadcrumbItem={props.breadcrumbItem} />
         <Row>
@@ -87,7 +107,6 @@ Dashboard.propTypes = {
   })),
   headerProps: PropTypes.shape(DashboardHeaderProps),
   aprTrackers: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.element, PropTypes.func])),
-  style: PropTypes.object,
   widgetFormatter: PropTypes.func,
   fieldKey: PropTypes.string,
 }

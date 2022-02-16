@@ -5,37 +5,37 @@ import historical from '../../api/v1/historical';
 
 import Dashboard from '../../components/Dashboard'
 
-const DashboardAstroWithEmissions = () => {
+const DashboardAstroTradingAprs = () => {
   const reports = [
     {
-      title: 'LUNA-UST w Astro Emissions',
+      title: 'LUNA-UST',
       imageUrl: '//assets.terra.money/icon/60/Luna.png',
       value: '',
       ticker: 'LUNA-UST',
-      action: historical.getHistoricalAstroAllinAprs,
+      action: historical.getHistoricalAstroCommAprs,
     },
     {
-      title: 'PSI-UST w Astro Emissions',
+      title: 'PSI-UST',
       imageUrl: '//whitelist.anchorprotocol.com/logo/bLUNA.png',
       value: '',
       ticker: 'PSI-UST',
-      action: historical.getHistoricalAstroAllinAprs,
+      action: historical.getHistoricalAstroCommAprs,
     },
     {
-      title: 'ANC-UST w Astro Emissions',
+      title: 'ANC-UST',
       imageUrl: '//alphadefi.fund/wp-content/uploads/2022/01/anch-logo.png',
       value: '',
       ticker: 'ANC-UST',
-      action: historical.getHistoricalAstroAllinAprs,
+      action: historical.getHistoricalAstroCommAprs,
     },
   ];
 
   return (
     <Dashboard
       title="Dashboards"
-      breadcrumbItem="AstroPort APRs With Emissions"
+      breadcrumbItem="AstroPort"
       headerProps={{
-        title: 'AstroPort APRs With Emissions',
+        title: 'AstroPort',
         subTitle: 'Select Pool to Analyze',
         desc: 'View Historical Vault APRs',
         imgSrc: '//alphadefi.fund/wp-content/uploads/2022/01/Astroport-FI-1024x538-1.jpeg'
@@ -50,4 +50,4 @@ const DashboardAstroWithEmissions = () => {
   );
 }
 
-export default DashboardAstroWithEmissions;
+export default DashboardAstroTradingAprs;
