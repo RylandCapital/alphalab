@@ -30,6 +30,7 @@ const publicRoutes = [
   { path: "/terradash", component: DashboardTerra },
   { path: "/anchor", component: DashboardAnchor },
   { path: "/nexus", component: DashboardNexus },
+
   { path: "/spread-tracker", component: DashboardCrypto },
   { path: "/fee-station-long", component: FeeStationLong },
   { path: "/fee-station-short", component: FeeStationShort },
