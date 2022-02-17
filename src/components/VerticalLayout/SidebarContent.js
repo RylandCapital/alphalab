@@ -144,44 +144,6 @@ class SidebarContent extends Component {
               </li>
 
               <li className="menu-title">{this.props.t("Dashboards")}</li>
-              <li>
-                <Link to="/#">
-                  <i className="bx bx-line-chart" />
-                  <span>{this.props.t("TerraSwap")}</span>
-                </Link>
-                <ul className="sub-menu" aria-expanded="false">
-                  <li>
-                    <Link to="/terra-pool-aprs">
-                      {this.props.t("TerraSwap Trading APRs")}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/terra-pool-tlvs">
-                      {this.props.t("TerraSwap Pool TLVs")}
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-
-              <li>
-                <Link to="/#">
-                  <i className="bx bx-line-chart" />
-                  <span>{this.props.t("AstroPort")}</span>
-                </Link>
-                <ul className="sub-menu" aria-expanded="false">
-                  <li>
-                    <Link to="/astro-pool-aprs">
-                      {this.props.t("AstroPort Trading APRs")}
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link to="/astro-pool-aprs-emissions">
-                      {this.props.t("AstroPort APRs with Astro Emissions")}
-                    </Link>
-                  </li>
-                </ul>
-              </li>
 
               <li>
                 <Link to="/spread-tracker">
@@ -189,17 +151,9 @@ class SidebarContent extends Component {
                   <span>{this.props.t("Mirror")}</span>
                 </Link>
                 <ul className="sub-menu" aria-expanded="false">
-                  {/*<li>
-                    <Link to="/dashboard">{this.props.t("Commission APRs")}</Link>
-                  </li>*/}
                   <li>
                     <Link to="/spread-tracker">
                       {this.props.t("Spread Tracker")}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/mirror-aprs">
-                      {this.props.t("Mirror Protocol APRs")}
                     </Link>
                   </li>
                 </ul>

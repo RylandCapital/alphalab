@@ -2,14 +2,9 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 import Dashboard from "../pages/Dashboard/index";
-import DashboardSaas from "../pages/Dashboard-saas/index";
 import DashboardCrypto from "../pages/Dashboard-crypto/index";
-import DashboardTerraSwapApr from "../pages/Dashboard-terraswap-apr";
-import DashboardTerraSwapTlvs from "../pages/Dashboard-terraswap-tlvs/index";
 import DashboardAnchor from "../pages/Dashboard-Anchor/index";
 import DashboardNexus from "../pages/Dashboard-Nexus/index";
-import DashboardAstroTradingAprs from "../pages/Dashboard-AstroPort-trading-aprs/index";
-import DashboardAstroWithEmissions from "../pages/Dashboard-AstroPortwEmissions/index";
 import DashboardTerra from "../pages/Dashboard-terradash/index";
 import DashboardFarmers from "../pages/Dashboard-FarmersMarket/index";
 import DashboardLiqProfile from "../pages/Dashboard-LiqProfile/index";
@@ -32,17 +27,9 @@ const publicRoutes = [
 
   // moved from  private
   { path: "/dashboard", component: Dashboard },
-  { path: "/mirror-aprs", component: DashboardSaas },
   { path: "/terradash", component: DashboardTerra },
-  { path: "/terra-pool-aprs", component: DashboardTerraSwapApr },
-  { path: "/terra-pool-tlvs", component: DashboardTerraSwapTlvs },
   { path: "/anchor", component: DashboardAnchor },
   { path: "/nexus", component: DashboardNexus },
-  { path: "/astro-pool-aprs", component: DashboardAstroTradingAprs },
-  {
-    path: "/astro-pool-aprs-emissions",
-    component: DashboardAstroWithEmissions,
-  },
   { path: "/spread-tracker", component: DashboardCrypto },
   { path: "/fee-station-long", component: FeeStationLong },
   { path: "/fee-station-short", component: FeeStationShort },
