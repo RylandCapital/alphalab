@@ -11,6 +11,10 @@ const getHistoricalTerraDash = (filters) => {
   return api.get(`/historical/terradashboard/${filters.ticker}`, { params: filters })
 }
 
+const getHistoricalAprs = (filters) => {
+  return api.get(`/historical/pools/${filters.dex}/${filters.ticker}`, { params: filters })
+}
+
 const getHistoricalCommAprs = (filters) => {
   return api.get(`/historical/comaprs/${filters.ticker}`, { params: filters })
 }
@@ -61,6 +65,7 @@ export default {
   getHistoricalLongAprs: getHistoricalLongAprs,
   getHistoricalShortAprs: getHistoricalShortAprs,
   getHistoricalTerraDash: getHistoricalTerraDash,
+  getHistoricalAprs:getHistoricalAprs,
   getHistoricalCommAprs: getHistoricalCommAprs,
   getHistoricalAstroCommAprs:getHistoricalAstroCommAprs,
   getHistoricalAstroAllinAprs:getHistoricalAstroAllinAprs,
@@ -68,7 +73,6 @@ export default {
   getHistoricalAnchor: getHistoricalAnchor,
   getHistoricalNexus: getHistoricalNexus,
   getSpreadHistStats: getSpreadHistStats,
-  getHistoricalAPRCompare:getHistoricalAPRCompare,
   getLiquidationProfile:getLiquidationProfile,
   getHistoricalLiquidationProfile:getHistoricalLiquidationProfile,
   getHistoricalLiquidations:getHistoricalLiquidations

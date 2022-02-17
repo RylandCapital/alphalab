@@ -1,8 +1,6 @@
 import React, { Component } from "react"
 import { Row, Col, Card } from "reactstrap"
 
-//Import Image
-import features from "../../assets/images/crypto/features-img/img-2.png"
 
 class CardWelcome extends Component {
   render() {

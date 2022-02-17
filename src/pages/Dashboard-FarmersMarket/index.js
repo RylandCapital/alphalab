@@ -1,18 +1,13 @@
 import React, { Component } from "react"
 import { Container, Row, Col } from "reactstrap"
-import MetaTags from 'react-meta-tags';
 
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 //Import Components
 import CardWelcome from "./card-welcome"
-import MiniWidget from "./mini-widget"
-import AprTrackerShort from './apr-tracker-short'
-import mirrorGraphql from '../../api/v1/mirror-graphql'
-import historical from '../../api/v1/historical'
+import AprTrackerShort from './main.js'
 
-import dayjs from 'dayjs'
 
 const options1 = {
   chart: { sparkline: { enabled: !0 } },

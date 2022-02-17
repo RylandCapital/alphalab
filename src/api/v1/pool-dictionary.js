@@ -16,6 +16,11 @@ const getAstroDict = () => {
   return api.get('/info/astrodict')
 }
 
+const getDexPoolDict = () => {
+  return api.get('/info/dexpooldict')
+}
+
+
 
 
 export default {
@@ -23,4 +28,5 @@ export default {
   getNexusDict: getNexusDict,
   getDashboardDict:getDashboardDict,
   getAstroDict:getAstroDict,
+  getDexPoolDict:getDexPoolDict
 }
