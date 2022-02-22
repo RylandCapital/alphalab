@@ -9,3 +9,14 @@ export function scoreFormatter(val) {
 export function numberFormat(val) {
   return Number(val/1000000).toLocaleString('en-US', {maximumFractionDigits:2})+' M';
 };
+
+export function mixedFormatter(val) {
+  if (val>2000){
+    return Number(val/1000000).toLocaleString('en-US', {maximumFractionDigits:2})+' M';
+  } else {
+
+    return Number(val*100).toFixed(2) + '%';
+
+  }
+  
+};

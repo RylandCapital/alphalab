@@ -5,7 +5,7 @@ import historical from '../../api/v1/historical'
 import dayjs from 'dayjs'
 
 import LineChart from '../../components/Charts/LineChart';
-import { pctFormatter } from '../../components/utils';
+import { mixedFormatter } from '../../components/utils';
 
 class AnchorDashboard extends React.Component {
   constructor(props) {
@@ -109,7 +109,7 @@ class AnchorDashboard extends React.Component {
           tickers={this.state.tickerOptions}
           title="Anchor Historical Timeseries"
           yAxisKey="value"
-          yAxisFormatter={pctFormatter}
+          yAxisFormatter={mixedFormatter}
         />
       </Col>
     )
