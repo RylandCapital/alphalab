@@ -102,9 +102,9 @@ class SpreadTracker extends React.Component {
     console.log(currentTime - 87400000);
     console.log(currentTime - 300000);
     let filters = {
-      from: currentTime - 87400000,
-      to: currentTime - 300000,
-      interval: 5,
+      from: currentTime - 30000000,
+      to: currentTime,
+      interval: 1,
       token: this.state.tokenAddresses[this.state.selectedTicker],
     };
     mirrorGraphql.getSpreadData(filters).then(data => {
