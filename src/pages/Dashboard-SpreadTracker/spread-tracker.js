@@ -164,7 +164,7 @@ class SpreadTracker extends React.Component {
   scheduleFetch() {
     this.clearTimer();
     // set to 5 min, the same as the graphql interval
-    this.timer = setTimeout(this.fetchSpreadData, 300000);
+    this.timer = setTimeout(this.fetchSpreadData, 25000);
   }
 
   componentDidMount() {

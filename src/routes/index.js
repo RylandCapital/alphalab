@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 import Dashboard from "../pages/Dashboard/index";
-import DashboardCrypto from "../pages/Dashboard-crypto/index";
+import DashboardCrypto from "../pages/Dashboard-SpreadTracker/index";
 import DashboardAnchor from "../pages/Dashboard-Anchor/index";
 import DashboardNexus from "../pages/Dashboard-Nexus/index";
 import DashboardTerra from "../pages/Dashboard-terradash/index";
@@ -10,8 +10,7 @@ import DashboardFarmers from "../pages/Dashboard-FarmersMarket/index";
 import DashboardLiqProfile from "../pages/Dashboard-LiqProfile/index";
 
 // FeeStation
-import FeeStationLong from "../pages/FeeStation/fee-station-long";
-import FeeStationShort from "../pages/FeeStation/fee-station-short";
+
 import Pages404 from "../pages/Utility/pages-404";
 import Pages500 from "../pages/Utility/pages-500";
 
@@ -32,8 +31,6 @@ const publicRoutes = [
   { path: "/nexus", component: DashboardNexus },
 
   { path: "/spread-tracker", component: DashboardCrypto },
-  { path: "/fee-station-long", component: FeeStationLong },
-  { path: "/fee-station-short", component: FeeStationShort },
   { path: "/farmers-market", component: DashboardFarmers },
   { path: "/liq-profile", component: DashboardLiqProfile },
 ];
