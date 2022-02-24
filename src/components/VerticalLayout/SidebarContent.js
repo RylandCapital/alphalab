@@ -107,6 +107,8 @@ class SidebarContent extends Component {
       <React.Fragment>
         <SimpleBar className="h-100" ref={this.refDiv}>
           <div id="sidebar-menu">
+
+
             <ul className="metismenu list-unstyled" id="side-menu">
               <li className="menu-title">{this.props.t("alphaLabs")}</li>
 
@@ -171,7 +173,30 @@ class SidebarContent extends Component {
                   <span>{this.props.t("Nexus")}</span>
                 </Link>
               </li>
+
+              <li>
+                <Link to="">
+                  <span>{this.props.t("")}</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="">
+                  <span>{this.props.t("")}</span>
+                </Link>
+              </li>
+            
+              <li>
+              <a href="https://alphadefi.fund/api/">
+              <i className="bx bx-right-arrow-alt" />
+                <span>{this.props.t("API Documentation")}</span>
+              </a>
+              </li>
+
             </ul>
+
+            
+
           </div>
         </SimpleBar>
       </React.Fragment>
