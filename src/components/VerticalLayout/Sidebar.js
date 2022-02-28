@@ -25,19 +25,19 @@ class Sidebar extends Component {
               <span className="logo-sm">
                 <img
                   src={
-                    "https://alphadefi.fund/wp-content/uploads/2021/08/noun_alpha_1359359.svg"
+                    "https://alphadefi.fund/wp-content/uploads/2022/02/logo-original-500.png"
                   }
                   alt=""
-                  height="22"
+                  height="90"
                 />
               </span>
               <span className="logo-lg">
                 <img
                   src={
-                    "https://alphadefi.fund/wp-content/uploads/2021/08/noun_alpha_1359359.svg"
+                    "https://alphadefi.fund/wp-content/uploads/2022/02/logo-original-500.png"
                   }
                   alt=""
-                  height="17"
+                  height="90"
                 />
               </span>
             </Link>
@@ -46,19 +46,19 @@ class Sidebar extends Component {
               <span className="logo-sm">
                 <img
                   src={
-                    "https://alphadefi.fund/wp-content/uploads/2021/08/noun_alpha_1359359.svg"
+                    "https://alphadefi.fund/wp-content/uploads/2022/02/logo-original-500.png"
                   }
                   alt=""
-                  height="50"
+                  height="90"
                 />
               </span>
               <span className="logo-lg">
                 <img
                   src={
-                    "https://alphadefi.fund/wp-content/uploads/2021/08/noun_alpha_1359359.svg"
+                    "https://alphadefi.fund/wp-content/uploads/2022/02/logo-original-500.png"
                   }
                   alt=""
-                  height="50"
+                  height="90"
                 />
               </span>
             </Link>
