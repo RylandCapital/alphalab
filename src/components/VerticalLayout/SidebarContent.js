@@ -193,6 +193,13 @@ class SidebarContent extends Component {
               </a>
               </li>
 
+              <li>
+              <a href="https://app.swaggerhub.com/apis-docs/RylandCapital/alphaAPI/1.0#/">
+              <i className="bx bx-right-arrow-alt" />
+                <span>{this.props.t("Swagger")}</span>
+              </a>
+              </li>
+
             </ul>
 
             
