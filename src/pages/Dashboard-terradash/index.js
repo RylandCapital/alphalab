@@ -69,6 +69,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      value: '',
       selectedLongTicker: '',
       reports: [
         {
@@ -168,13 +169,13 @@ class Dashboard extends Component {
       ],
       reports4: [
         {
-          title: "LUNA Staking Return Annualized Percentile Rank",
+          title: "AlphaDefi Terra Health Indicator",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/Luna.png",
           color: "warning",
           value: "",
           arrow: 'mdi-arrow-up text-success',
-          series: [{ name: "LUNA Staking Return Annualized Percentile Rank", data: []}],
+          series: [{ name: "AlphaDefi Terra Health Indicator", data: []}],
           options: options1,
         },
         {
@@ -319,7 +320,7 @@ fetchAprData1() {
       precision = 'hour'
     }
     let filters = {
-      ticker: 'LUNA Staking Return Annualized Percentile Rank',
+      ticker: 'terraHealth',
       precision: precision,
     }
     historical.getHistoricalTerraDash(filters).then(apiData => {
@@ -331,7 +332,20 @@ fetchAprData1() {
         })
         console.log(formattedData)
         let newState2 = JSON.parse(JSON.stringify(this.state))
-        newState2.reports4[0].value = Number(formattedData[formattedData.length-1].Price*100).toLocaleString('en-US', {maximumFractionDigits:2})+'%'
+        if ((Number(formattedData[formattedData.length-1].Price))>=50){
+          newState2.value = ' - Amazing Embedded Value' 
+        }
+        else if ((Number(formattedData[formattedData.length-1].Price))<50 && (Number(formattedData[formattedData.length-1].Price))>=40) {
+          newState2.value = ' - High Embedded Value'
+          }
+        else if ((Number(formattedData[formattedData.length-1].Price))<40 && (Number(formattedData[formattedData.length-1].Price))>=20) {
+          newState2.value = ' - Normal Embedded Value'
+          }
+          else if ((Number(formattedData[formattedData.length-1].Price))<20) {
+            newState2.value = ' - Poor Embedded Value'
+          }
+
+        newState2.reports4[0].value = Number(formattedData[formattedData.length-1].Price).toLocaleString('en-US', {maximumFractionDigits:2}) + newState2.value
         this.setState(newState2)
     })
   }
