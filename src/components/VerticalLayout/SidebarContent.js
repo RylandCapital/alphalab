@@ -201,7 +201,7 @@ class SidebarContent extends Component {
               </li>
 
               <li>
-              <a href="https://app.swaggerhub.com/apis-docs/RylandCapital/alphaAPI/1.0#/">
+              <a href="https://app.swaggerhub.com/apis-docs/alphadefi/alphaAPIv2/1.0.0-oas3">
               <i className="bx bx-right-arrow-alt" />
                 <span>{this.props.t("Swagger")}</span>
               </a>
