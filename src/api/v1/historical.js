@@ -1,5 +1,9 @@
 import * as api from '../../helpers/api_helper'
 
+const getHistoricalLiquidStaking = (filters) => {
+  return api.get(`/historical/liquidstaking/${filters.ticker}`, { params: filters })
+}
+
 const getHistoricalLongAprs = (filters) => {
   return api.get(`/historical/mirror/longaprs/${filters.ticker}`, { params: filters })
 }
@@ -49,5 +53,6 @@ export default {
   getSpreadHistStats: getSpreadHistStats,
   getLiquidationProfile:getLiquidationProfile,
   getHistoricalLiquidationProfile:getHistoricalLiquidationProfile,
-  getHistoricalLiquidations:getHistoricalLiquidations
+  getHistoricalLiquidations:getHistoricalLiquidations,
+  getHistoricalLiquidStaking:getHistoricalLiquidStaking
 }

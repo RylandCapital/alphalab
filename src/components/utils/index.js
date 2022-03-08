@@ -20,3 +20,15 @@ export function mixedFormatter(val) {
   }
   
 };
+
+export function mixedFormatterOne(val) {
+  if (val>1){
+    return val;
+  } else {
+
+    return Number(val*100).toFixed(2) + '%';
+
+  }
+  
+};
+

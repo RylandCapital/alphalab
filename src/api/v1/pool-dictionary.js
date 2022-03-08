@@ -17,12 +17,14 @@ const getDexPoolDict = () => {
   return api.get('/info/dexpooldict')
 }
 
-
-
+const getLiqStakingDict = () => {
+  return api.get('/info/liqstakingdict')
+}
 
 export default {
   getNexusDict: getNexusDict,
   getDashboardDict:getDashboardDict,
   getAstroDict:getAstroDict,
-  getDexPoolDict:getDexPoolDict
+  getDexPoolDict:getDexPoolDict,
+  getLiqStakingDict:getLiqStakingDict
 }
