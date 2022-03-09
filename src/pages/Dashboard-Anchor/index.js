@@ -38,7 +38,7 @@ const DashboardAnchor = () => {
         title: 'Anchor Protocol Data',
         subTitle: 'Select TimeSeries To Analyze',
         desc: 'Visualize Historical Trends',
-        imgSrc: '//pbs.twimg.com/media/E1J63l8VUAML6XD?format=png&name=4096x4096'
+        imgSrc: 'http://alphadefi.fund/wp-content/uploads/2022/03/ANC_300x300_ccexpress.png'
       }}
       reports={reports}
       aprTrackers={[AnchorDashboard]}
