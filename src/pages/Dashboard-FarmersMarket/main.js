@@ -42,7 +42,8 @@ class AprTrackerShort extends React.Component {
       dex:'Terraswap',
       dexs:[{ value: 'Terraswap', label: 'Terraswap' },
         { value: 'Astroport', label: 'Astroport' },
-        { value: 'Loop', label: 'Loop' }],
+        { value: 'Loop', label: 'Loop' },
+        { value: 'PRISM Swap', label: 'PRISM Swap' }],
       tickerOptions: [],
       tokenAddresses: {},
       rowData: [],
@@ -126,12 +127,19 @@ class AprTrackerShort extends React.Component {
 
   handleChangeDex(selectedOption) {
     console.log(selectedOption.value)
+    if (selectedOption.value === 'PRISM Swap'){
+      this.setState({
+        dex: selectedOption.value,
+        selectedPool: 'prism-xprism'
+      }, () => this.fetchTickers(selectedOption.value))
+
+    } else {
     this.setState({
       dex: selectedOption.value,
       selectedPool: 'luna-ust'
     }, () => this.fetchTickers(selectedOption.value))
 
-  }
+  }}
 
   handleStartDateChange(date) {
     let newDates = [date, this.state.longDates[1]]
