@@ -38,7 +38,7 @@ const DashboardNexus = () => {
         title: 'Nexus Protocol',
         subTitle: 'Select Vault to Analyze',
         desc: 'View Historical Vault APRS',
-        imgSrc: '//cdn-images-1.medium.com/fit/t/1600/480/1*u9vVW_EhurWnffRmVZibKA.png'
+        imgSrc: 'http://alphadefi.fund/wp-content/uploads/2022/03/nexus_150x150.jpeg'
       }}
       reports={reports}
       aprTrackers={[AprTrackerShort]}

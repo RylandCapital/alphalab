@@ -8,21 +8,21 @@ import Dashboard from '../../components/DashBoardDouble'
 const DashboardStaking = () => {
   const reports = [
     {
-      title: 'Legacy_Staking_TerraStation_APR',
+      title: 'Legacy Staking TerraStation APR',
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: '',
       ticker: 'Legacy_Staking_TerraStation_APR',
       action: historical.getHistoricalLiquidStaking,
     },
     {
-      title: 'Prism_yLuna_APR',
+      title: 'Prism yLuna APR',
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: '',
       ticker: 'Prism_yLuna_APR',
       action: historical.getHistoricalLiquidStaking,
     },
     {
-      title: 'Nexus_nLuna_APR',
+      title: 'Nexus nLuna APR',
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: '',
       ticker: 'Nexus_nLuna_APR',
@@ -31,21 +31,21 @@ const DashboardStaking = () => {
   ];
   const reports2 = [
     {
-      title: 'Anchor_bLuna_APR',
+      title: 'Anchor bLuna APR',
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: '',
       ticker: 'Anchor_bLuna_APR',
       action: historical.getHistoricalLiquidStaking,
     },
     {
-      title: 'Lido_stLuna_APR',
+      title: 'Lido stLuna APR',
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: '',
       ticker: 'Lido_stLuna_APR',
       action: historical.getHistoricalLiquidStaking,
     },
     {
-      title: 'Stader_LunaX_APR',
+      title: 'Stader LunaX APR',
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: 'Stader_LunaX_APR',
       ticker: 'Stader_LunaX_APR',
