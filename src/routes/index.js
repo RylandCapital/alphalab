@@ -7,6 +7,7 @@ import DashboardAnchor from "../pages/Dashboard-Anchor/index";
 import DashboardNexus from "../pages/Dashboard-Nexus/index";
 import DashboardTerra from "../pages/Dashboard-terradash/index";
 import DashboardFarmers from "../pages/Dashboard-FarmersMarket/index";
+import DashboardStaking from "../pages/Dashboard-StakingMarket/index";
 import DashboardLiqProfile from "../pages/Dashboard-LiqProfile/index";
 
 // FeeStation
@@ -32,6 +33,7 @@ const publicRoutes = [
 
   { path: "/spread-tracker", component: DashboardCrypto },
   { path: "/farmers-market", component: DashboardFarmers },
+  { path: "/staking-market", component: DashboardStaking },
   { path: "/liq-profile", component: DashboardLiqProfile },
 ];
 

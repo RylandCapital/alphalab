@@ -22,9 +22,6 @@ function pctFormatter(params) {
   return Number(params.value * 100).toFixed(2) + "%";
 }
 
-function tooltipIndepth(a) {
-  console.log(a);
-}
 
 function formatXAxis(tickItem) {
   var date = new Date(tickItem);
@@ -33,6 +30,11 @@ function formatXAxis(tickItem) {
   var seconds = "0" + date.getSeconds();
 
   return hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2);
+}
+
+function formatYAxis(tickItem) {
+  
+  return (tickItem)+'%';
 }
 
 const fetchStats = () => {
@@ -53,6 +55,7 @@ class SpreadTracker extends React.Component {
       rowData: [],
     };
     this.timer = null;
+    this.timer2 = null;
     this.clearTimer = this.clearTimer.bind(this);
     this.scheduleFetch = this.scheduleFetch.bind(this);
     this.fetchSpreadData = this.fetchSpreadData.bind(this);
@@ -125,14 +128,14 @@ class SpreadTracker extends React.Component {
               (Number(item["price"]) -
                 Number(data.asset.prices.oracleHistory[index]["price"])) /
               Number(data.asset.prices.oracleHistory[index]["price"])
-            ).toFixed(4),
+            ),
             timestamp: item["timestamp"],
           };
         })
         .map(obj => {
           return {
             xaxis3: obj.timestamp,
-            Spread: (obj.spread * 100).toFixed(2),
+            Spread: Number((obj.spread*100).toFixed(4)),
           };
         });
       this.setState({
@@ -157,14 +160,16 @@ class SpreadTracker extends React.Component {
   clearTimer() {
     if (this.timer) {
       clearTimeout(this.timer);
+      clearTimeout(this.timer2);
       this.timer = null;
+      this.timer2 = null;
     }
   }
 
   scheduleFetch() {
     this.clearTimer();
-    // set to 5 min, the same as the graphql interval
     this.timer = setTimeout(this.fetchSpreadData, 25000);
+    this.timer2 = setTimeout(this.fetchData, 100000);
   }
 
   componentDidMount() {
@@ -230,9 +235,8 @@ class SpreadTracker extends React.Component {
                       yAxisId={2}
                       domain={["auto", "auto"]}
                       orientation="right"
-                      tickFormatter={tick => {
-                        return tick.toLocaleString() + "%";
-                      }}
+                      tickFormatter={formatYAxis}
+                      
                     />
                     <Tooltip
                       labelFormatter={tick => {
@@ -260,7 +264,7 @@ class SpreadTracker extends React.Component {
                       data={this.state.spreadData}
                       yAxisId={2}
                       xAxisId={3}
-                      type="linear"
+                      type="basis"
                       dataKey="Spread"
                       dot={false}
                       strokeWidth={2}
@@ -274,7 +278,7 @@ class SpreadTracker extends React.Component {
             <CardBody>
               <div className="ag-theme-alpine" style={{ height: 400 }}>
                 <Label className="control-label">
-                  Hover Mouse for Column Descriptions
+                  30 Day Rolling Spread Statistics
                 </Label>
                 <AgGridReact
                   onGridReady={this.onGridReady.bind(this)}
@@ -286,6 +290,13 @@ class SpreadTracker extends React.Component {
                     filter={true}
                     resizable={true}
                     headerTooltip="Symbol"
+                  ></AgGridColumn>
+                  <AgGridColumn
+                    field="Current (1Min Updated)"
+                    sortable={true}
+                    filter={true}
+                    valueFormatter={pctFormatter}
+                    resizable={true}
                   ></AgGridColumn>
                   <AgGridColumn
                     field="mean"

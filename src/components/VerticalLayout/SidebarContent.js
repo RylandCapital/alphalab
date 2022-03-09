@@ -127,6 +127,13 @@ class SidebarContent extends Component {
               </li>
 
               <li>
+                <Link to="/staking-market">
+                  <i className="bx bx-home-circle me-2" />
+                  <span>{this.props.t("Luna Staking Derivatives")}</span>
+                </Link>
+              </li>
+
+              <li>
                 <Link to="/liq-profile">
                   <i className="bx bx-home-circle me-2" />
                   <span>{this.props.t("Liquidation Nodes")}</span>
@@ -194,7 +201,7 @@ class SidebarContent extends Component {
               </li>
 
               <li>
-              <a href="https://app.swaggerhub.com/apis-docs/RylandCapital/alphaAPI/1.0#/">
+              <a href="https://app.swaggerhub.com/apis-docs/alphadefi/alphaAPIv2/1.0.0-oas3">
               <i className="bx bx-right-arrow-alt" />
                 <span>{this.props.t("Swagger")}</span>
               </a>
