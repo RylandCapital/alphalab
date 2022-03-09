@@ -61,7 +61,7 @@ const DashboardStaking = () => {
         title: 'Luna Staking Derivatives',
         subTitle: 'Select TimeSeries To Analyze',
         desc: 'Visualize Historical Trends',
-        imgSrc: '//alphadefi.fund/wp-content/uploads/2022/03/logo-nobackground-200-2.png'
+        imgSrc: '//alphadefi.fund/wp-content/uploads/2022/03/logo-original-1000-ps_ccexpress.png'
       }}
       reports={reports}
       reports2={reports2}
