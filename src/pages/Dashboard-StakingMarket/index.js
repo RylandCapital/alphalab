@@ -31,7 +31,7 @@ const DashboardStaking = () => {
   ];
   const reports2 = [
     {
-      title: 'Anchor_bLuna_APR',
+      title: 'Anchor bLuna APR',
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: '',
       ticker: 'Anchor_bLuna_APR',

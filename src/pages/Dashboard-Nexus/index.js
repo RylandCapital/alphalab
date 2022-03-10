@@ -41,7 +41,6 @@ const DashboardNexus = () => {
         desc: 'View Historical Vault APRS',
         subtitle2: <a href='https://nexusprotocol.app/'target="_blank" rel="noreferrer noopener"> <u>Visit Nexus Protocol</u></a>,
         imgSrc: 'http://alphadefi.fund/wp-content/uploads/2022/03/nexusroundHD1_ccexpress_150.png'
-  
       }}
       reports={reports}
       aprTrackers={[AprTrackerShort]}
