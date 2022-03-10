@@ -29,6 +29,10 @@ class CardWelcome extends Component {
                       <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
                       Locate Trading Opportunities
                     </p>
+                    <p className="mb-0">
+                      <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
+                      <a href='https://mirrorprotocol.app/#/trade'target="_blank" rel="noreferrer noopener"> <u>Visit Mirror Protocol</u></a>
+                      </p>
                   </div>
                 </div>
               </Col>

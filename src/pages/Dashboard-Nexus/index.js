@@ -2,6 +2,7 @@ import React from 'react'
 
 import AprTrackerShort from './apr-tracker-short';
 import historical from '../../api/v1/historical';
+import { Link } from "react-router-dom";
 
 import Dashboard from '../../components/Dashboard'
 
@@ -38,7 +39,9 @@ const DashboardNexus = () => {
         title: 'Nexus Protocol',
         subTitle: 'Select Vault to Analyze',
         desc: 'View Historical Vault APRS',
-        imgSrc: 'http://alphadefi.fund/wp-content/uploads/2022/03/nexus_150x150.jpeg'
+        subtitle2: <a href='https://nexusprotocol.app/'target="_blank" rel="noreferrer noopener"> <u>Visit Nexus Protocol</u></a>,
+        imgSrc: 'http://alphadefi.fund/wp-content/uploads/2022/03/nexusroundHD1_ccexpress_150.png'
+  
       }}
       reports={reports}
       aprTrackers={[AprTrackerShort]}

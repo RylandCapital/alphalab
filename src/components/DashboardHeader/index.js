@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Card } from 'reactstrap';
+import { Link } from "react-router-dom";
 
 export const DashboardHeader = (props) => (
   <Card>
@@ -24,6 +25,11 @@ export const DashboardHeader = (props) => (
                 <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
                 Locate Trading Opportunities
               </p>
+              <p className="mb-1">
+                <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
+                {props.subtitle2}
+                </p>
+
             </div>
           </div>
         </Col>
@@ -42,6 +48,7 @@ export const DashboardHeaderProps = {
   subTitle: PropTypes.string.isRequired,
   desc: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
+  subtitle2: PropTypes.string.isRequired,
 };
 
 DashboardHeader.propTypes = DashboardHeaderProps;

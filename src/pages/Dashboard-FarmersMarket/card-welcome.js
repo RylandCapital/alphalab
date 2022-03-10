@@ -27,6 +27,13 @@ class CardWelcome extends Component {
                       <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
                       Locate Trading Opportunities
                     </p>
+                    <p className="mb-0">
+                      <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
+                      <a href='https://app.terraswap.io/'target="_blank" rel="noreferrer noopener"> <u>Terraswap</u></a> ,
+                      <a href='https://app.astroport.fi/swap'target="_blank" rel="noreferrer noopener"> <u>Astroport Swap</u></a> ,
+                      <a href='https://dex.loop.markets/swap#Swap'target="_blank" rel="noreferrer noopener"> <u>Loop Swap</u></a> ,
+                      <a href='https://prismprotocol.app/swap'target="_blank" rel="noreferrer noopener"> <u>Prism Swap</u></a>
+                    </p>
                   </div>
                 </div>
               </Col>
