@@ -15,14 +15,14 @@ const DashboardStaking = () => {
       action: historical.getHistoricalLiquidStaking,
     },
     {
-      title: 'Prism yLuna APR',
+      title: <a href='https://prismprotocol.app/stake'target="_blank" rel="noreferrer noopener"> <u>Prism yLuna APR</u></a>,
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: '',
       ticker: 'Prism_yLuna_APR',
       action: historical.getHistoricalLiquidStaking,
     },
     {
-      title: 'Nexus nLuna APR',
+      title: <a href='https://terra.nexusprotocol.app/vaults'target="_blank" rel="noreferrer noopener"> <u>Nexus nLuna APR</u></a>,
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: '',
       ticker: 'Nexus_nLuna_APR',
@@ -38,14 +38,14 @@ const DashboardStaking = () => {
       action: historical.getHistoricalLiquidStaking,
     },
     {
-      title: 'Lido stLuna APR',
+      title: <a href='https://lido.fi/terra'target="_blank" rel="noreferrer noopener"> <u>Lido stLuna APR</u></a>,
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: '',
       ticker: 'Lido_stLuna_APR',
       action: historical.getHistoricalLiquidStaking,
     },
     {
-      title: 'Stader LunaX APR',
+      title:  <a href='https://terra.staderlabs.com/lt-pools'target="_blank" rel="noreferrer noopener"> <u>Stader LunaX APR</u></a>,
       imageUrl: '//whitelist.mirror.finance/images/Luna.png',
       value: 'Stader_LunaX_APR',
       ticker: 'Stader_LunaX_APR',
@@ -61,6 +61,7 @@ const DashboardStaking = () => {
         title: 'Luna Staking Derivatives',
         subTitle: 'Select TimeSeries To Analyze',
         desc: 'Visualize Historical Trends',
+        subtitle2: 'Stake & Chill',
         imgSrc: '//alphadefi.fund/wp-content/uploads/2022/03/logo-original-1000-ps_ccexpress.png'
       }}
       reports={reports}

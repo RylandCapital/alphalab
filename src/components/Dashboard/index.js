@@ -98,6 +98,7 @@ const Dashboard = (props) => {
 
 Dashboard.propTypes = {
   title: PropTypes.string,
+  title2: PropTypes.string,
   breadcrumbItem: PropTypes.string,
   reports: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string,

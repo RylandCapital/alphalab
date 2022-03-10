@@ -38,6 +38,7 @@ const DashboardAnchor = () => {
         title: 'Anchor Protocol Data',
         subTitle: 'Select TimeSeries To Analyze',
         desc: 'Visualize Historical Trends',
+        subtitle2: <a href='https://www.anchorprotocol.com/'target="_blank" rel="noreferrer noopener"> <u>Visit Anchor Protocol</u></a>,
         imgSrc: 'http://alphadefi.fund/wp-content/uploads/2022/03/ANC_300x300_ccexpress.png'
       }}
       reports={reports}

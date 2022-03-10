@@ -27,6 +27,10 @@ class CardWelcome extends Component {
                       <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
                       Use Higher Loan Nodes as Support or Areas to Place Liquidation Bids at Higher Premiums
                     </p>
+                    <p className="mb-3">
+                      <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
+                      <a href='https://kujira.app/'target="_blank" rel="noreferrer noopener"> <u>Visit Kujira Protocol</u></a>  
+                    </p>
                     <p className="mb-1">
                     <Label className="control-label">*** HISTORICAL DATABASE STARTS 2/3/2022 ***</Label>
                     </p>
