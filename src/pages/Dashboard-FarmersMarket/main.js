@@ -28,6 +28,10 @@ function pctFormatter2(params) {
   return (Number(params)*100).toFixed(4)+'%'
 }
 
+function rounder(params) {
+  return '$'+Number(params.value).toFixed(4)
+}
+
 const fetchStats = () => {
   return fetch(
     "https://api.alphadefi.fund/info/aprcompare"
@@ -60,6 +64,10 @@ class AprTrackerShort extends React.Component {
     this.handleEndDateChange = this.handleEndDateChange.bind(this)
 
     this.fetchData = this.fetchData.bind(this);
+
+    this.timer = null;
+    this.clearTimer = this.clearTimer.bind(this);
+    this.scheduleFetch = this.scheduleFetch.bind(this);
   }
 
   async fetchData() {
@@ -67,6 +75,7 @@ class AprTrackerShort extends React.Component {
     const data = await response.json();
     console.log(data)
     this.setState({ rowData: data });
+    this.scheduleFetch();
   }
 
   onGridReady(params) {
@@ -155,6 +164,19 @@ class AprTrackerShort extends React.Component {
     }, () => this.fetchAprData())
   }
 
+  clearTimer() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;;
+    }
+  }
+
+  scheduleFetch() {
+    this.clearTimer();
+    // set to 1 min, the same as the graphql interval
+    this.timer = setTimeout(this.fetchData, 60000);
+  }
+
   componentDidMount() {
     // load latest month apr data by default
     this.fetchTickers('Terraswap')
@@ -216,6 +238,27 @@ class AprTrackerShort extends React.Component {
                 <AgGridColumn field="Loop Volume Dominance" sortable={true} filter={true} valueFormatter={pctFormatter} resizable={true}  headerTooltip='% Total Volume from Loop'></AgGridColumn>
             </AgGridReact>
             <Label className="control-label">***0.00% indicates pool is not offered on that DEX</Label>
+            </div>
+            </CardBody>
+            </Card>
+            <Card>
+            <CardBody>
+            <div style={{height: 50}}>
+
+
+
+            </div>
+            <div className="ag-theme-alpine" style={{height: 800}}>
+            <Label className="control-label">** some arb %s may be misleading if there isnt not enough volume to support your trade (updated every 60 seconds)</Label>
+            <AgGridReact
+               onGridReady={this.onGridReady.bind(this)}
+               rowData={this.state.rowData}>
+                <AgGridColumn field="Symbol" sortable={true} filter={true} resizable={true} headerTooltip='Pool Name'></AgGridColumn>
+                <AgGridColumn field="Terraswap Price" sortable={true} filter={true} resizable={true} valueFormatter={rounder} headerTooltip='TerraSwap Trading APR'></AgGridColumn>
+                <AgGridColumn field="Astroport Price" sortable={true} filter={true}  resizable={true} valueFormatter={rounder} headerTooltip='AstroPort Trading APR'></AgGridColumn>
+                <AgGridColumn field="Loop Price" sortable={true} filter={true}  resizable={true} valueFormatter={rounder} headerTooltip='Loop Trading APR'></AgGridColumn>
+                <AgGridColumn field="Top Arb Opportunity" sortable={true} filter={true}  resizable={true} valueFormatter={pctFormatter} headerTooltip='% Total Volume from TerraSwap'></AgGridColumn>
+            </AgGridReact>
             </div>
           </CardBody>
           </Card>
