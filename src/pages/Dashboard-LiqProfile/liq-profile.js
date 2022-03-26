@@ -125,7 +125,7 @@ class AprTrackerShort extends React.Component {
       ],
       reports2: [
         {
-          title: "Largest Executed Bid (Last 30 Days)",
+          title: "Largest Executed Bid (Rolling 100 Liquidations)",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/Luna.png",
           color: "warning",
@@ -135,7 +135,7 @@ class AprTrackerShort extends React.Component {
           options: options,
         },
         {
-          title: "Best Discount Captured (Last 30 Days)",
+          title: "Best Discount Captured (Rolling 100 Liquidations)",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/Luna.png",
           color: "primary",
@@ -145,7 +145,7 @@ class AprTrackerShort extends React.Component {
           options: options,
         },
         {
-          title: "Average Discount Captured (Last 30 Days)",
+          title: "Average Discount Captured (Rolling 100 Liquidations)",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/Luna.png",
           color: "info",
