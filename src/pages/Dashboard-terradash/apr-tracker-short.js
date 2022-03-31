@@ -22,7 +22,12 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css'
 import dayjs from 'dayjs'
 
 function pctFormatter(params) {
+  if (params<101) {
   return Number(Number(params)*100).toFixed(2) + '%'
+  }
+else {
+  return Number(params).toLocaleString(undefined, { maximumFractionDigits: 2 })
+  }
 }
 
 function scoreFormatter(params) {
@@ -142,7 +147,7 @@ class AprTrackerShort extends React.Component {
         .map(obj => {
           return {
             xaxis1: dayjs(obj.date).format('MM/DD/YYYY HH:mm:ss'),
-            'Failed Transactions': obj['%FAIL'],
+            'Percent Failed Transactions': obj['%FAIL'],
             'Total Transactions': obj.TOTAL
             }
         })
@@ -185,7 +190,7 @@ class AprTrackerShort extends React.Component {
       return (
         <div className="custom-tooltip" style={{background:'#f2eeed'}}>
           <p className="label">{`Total Transactions : ${payload[0].value}`}</p>
-          <p className="intro">{`Failed Transactions : ${pctFormatter(payload[1].value)}`}</p>
+          <p className="intro">{`Percent Failed Transactions : ${pctFormatter(payload[1].value)}`}</p>
         </div>
       );
     }
@@ -261,10 +266,10 @@ class AprTrackerShort extends React.Component {
                 <XAxis dataKey='xaxis1' type="category" domain={['dataMin', 'dataMax']} tickFormatter={formatXAxis}/>
                 <YAxis yAxisId="right" orientation="right" tickFormatter={pctFormatter}/>
                 <YAxis yAxisId="left" orientation="left"/>
-                <Tooltip content={this.CustomTooltip} />
+                <Tooltip formatter={tick => {return pctFormatter(tick);}}/>
                 <Legend />
                 <Bar yAxisId="left" dataKey="Total Transactions" barSize={20} fill="#413ea0" />
-                <Line yAxisId="right" type="monotone" dataKey="Failed Transactions" dot={false} strokeWidth={4} stroke="#d49031" />
+                <Line yAxisId="right" type="monotone" dataKey="Percent Failed Transactions" dot={false} strokeWidth={4} stroke="#d49031" />
               </ComposedChart>
              </ResponsiveContainer>
              </div>
