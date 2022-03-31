@@ -21,10 +21,15 @@ const getLiqStakingDict = () => {
   return api.get('/info/liqstakingdict')
 }
 
+const getTerraTxSuccessFail = () => {
+  return api.get('/info/txfailratios')
+}
+
 export default {
   getNexusDict: getNexusDict,
   getDashboardDict:getDashboardDict,
   getAstroDict:getAstroDict,
   getDexPoolDict:getDexPoolDict,
-  getLiqStakingDict:getLiqStakingDict
+  getLiqStakingDict:getLiqStakingDict,
+  getTerraTxSuccessFail:getTerraTxSuccessFail
 }

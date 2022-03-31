@@ -7,25 +7,22 @@ import {
   Card,
   CardBody
 } from "reactstrap"
+import info from '../../api/v1/pool-dictionary'
 import poolDictApi from '../../api/v1/pool-dictionary'
-import mirrorGraphql from '../../api/v1/mirror-graphql'
 import historical from '../../api/v1/historical'
-import {AgGridColumn, AgGridReact} from 'ag-grid-react'
 
 //Import Date Picker
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
-import {LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts'
+import {CartesianGrid, ComposedChart, LineChart, Line, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts'
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css'
-import { ConsoleWriter } from "istanbul-lib-report"
-import { date } from "language-tags"
 import dayjs from 'dayjs'
 
 function pctFormatter(params) {
-  return Number(params.value*100).toFixed(2) + '%';
+  return Number(Number(params)*100).toFixed(2) + '%'
 }
 
 function scoreFormatter(params) {
@@ -47,7 +44,6 @@ function priceFormat(tickItem) {
 }
 
 
-
 const fetchStats = () => {
   return fetch(
     "https://api.alphadefi.fund/historical/poolhiststats"
@@ -59,6 +55,7 @@ class AprTrackerShort extends React.Component {
     super(props)
     this.state = {
       data: [],
+      data2: [],
       tickerOptions: [],
       tokenAddresses: {},
       rowData: [],
@@ -68,6 +65,7 @@ class AprTrackerShort extends React.Component {
       longDates: [dayjs().subtract(6, 'month').toDate(), dayjs().toDate()],
     }
     this.fetchAprData = this.fetchAprData.bind(this)
+    this.fetchTxData = this.fetchTxData.bind(this)
     this.fetchTickers = this.fetchTickers.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleStartDateChange = this.handleStartDateChange.bind(this)
@@ -136,6 +134,22 @@ class AprTrackerShort extends React.Component {
     })
   }
 
+  fetchTxData() {
+    info.getTerraTxSuccessFail().then(apiData => {
+      let formattedData = apiData
+        .map(obj => {
+          return {
+            xaxis1: dayjs(obj.date).format('MM/DD/YYYY HH:mm:ss'),
+            Percent_Failed_Transactions: obj['%FAIL'],
+            total: obj.TOTAL
+            }
+        })
+      this.setState(_ => ({
+        data2: formattedData,
+      }))
+    })
+  }
+
   handleChange(selectedOption) {
     console.log(selectedOption.value)
     this.setState({
@@ -160,6 +174,7 @@ class AprTrackerShort extends React.Component {
   componentDidMount() {
     // load latest month by default
     this.fetchTickers()
+    this.fetchTxData()
 
   }
 
@@ -210,28 +225,37 @@ class AprTrackerShort extends React.Component {
              </div>
             </CardBody>
           </Card>
-          {/*<Card>
-          <CardBody>
-            <div className="ag-theme-alpine" style={{height: 400}}>
-            <Label className="control-label">Hover Mouse for Column Descriptions</Label>
-            <AgGridReact
-               onGridReady={this.onGridReady.bind(this)}
-               rowData={this.state.rowData}>
-                <AgGridColumn field="symbol" sortable={true} filter={true} resizable={true} headerTooltip='Symbol'></AgGridColumn>
-                <AgGridColumn field="AlphaDefi APR Score" sortable={true} filter={true} valueFormatter={scoreFormatter} resizable={true}  headerTooltip='Current Yield / rolling 21 day vol'></AgGridColumn>
-                <AgGridColumn field="current" sortable={true} filter={true} valueFormatter={pctFormatter} resizable={true}  headerTooltip='most recently calculated APY'></AgGridColumn>
-                <AgGridColumn field="mean" sortable={true} filter={true} valueFormatter={pctFormatter} resizable={true}  headerTooltip='mean historical apr, normally the apr this pool trades at'></AgGridColumn>
-                <AgGridColumn field="Three SD" sortable={true} filter={true} valueFormatter={pctFormatter} resizable={true}  headerTooltip='+ three standard deviations from mean'></AgGridColumn>
-                <AgGridColumn field="Neg Three SD" sortable={true} filter={true} valueFormatter={pctFormatter} resizable={true}  headerTooltip='- three standard deviations from mean'></AgGridColumn>
-                <AgGridColumn field="max" sortable={true} filter={true} valueFormatter={pctFormatter} resizable={true}  headerTooltip='max apr last 21 days'></AgGridColumn>
-                <AgGridColumn field="min" sortable={true} filter={true} valueFormatter={pctFormatter} resizable={true}   headerTooltip='min apr last 21 days'></AgGridColumn>
-                <AgGridColumn field="std" sortable={true} filter={true} valueFormatter={pctFormatter} resizable={true}  headerTooltip='std of historical apr'></AgGridColumn>
-                <AgGridColumn field="Historical 5th % Spread" sortable={true} filter={true} valueFormatter={pctFormatter} resizable={true}  headerTooltip='Historical 5th % APR'></AgGridColumn>
-                <AgGridColumn field="Historical 95th % Spread" sortable={true} filter={true} valueFormatter={pctFormatter} resizable={true}  headerTooltip='Historical 95th % APR'></AgGridColumn>
-            </AgGridReact>
-            </div>
-          </CardBody>
-          </Card>*/}
+
+          <Card >
+            <CardBody className="card-body-test">
+              <FormGroup className="w-25 select2-container mb-3 d-inline-block me-2">
+                <Label className="control-label">TERRA TRANSACTION INFORMATION</Label>
+              </FormGroup>
+              <div style={{height: 600}}>
+              <ResponsiveContainer width="100%" height="100%">
+
+              <ComposedChart
+                width={500}
+                height={400}
+                data={this.state.data2}
+                margin={{
+                  top: 20, right: 20, bottom: 20, left: 20,
+                }}
+              >
+                <CartesianGrid stroke="#f5f5f5" />
+                <XAxis dataKey='xaxis1' type="category" domain={['dataMin', 'dataMax']} tickFormatter={formatXAxis}/>
+                <YAxis yAxisId="right" orientation="right" tickFormatter={pctFormatter}/>
+                <YAxis yAxisId="left" orientation="left"/>
+                <Tooltip />
+                <Legend />
+                <Bar yAxisId="left" dataKey="total" barSize={20} fill="#413ea0" />
+                <Line yAxisId="right" type="monotone" dataKey="Percent_Failed_Transactions" dot={false} strokeWidth={4} stroke="#d49031" />
+              </ComposedChart>
+             </ResponsiveContainer>
+             </div>
+            </CardBody>
+          </Card>
+          
         </Col>
       </React.Fragment>
     )
