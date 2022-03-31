@@ -72,6 +72,8 @@ class AprTrackerShort extends React.Component {
     this.handleEndDateChange = this.handleEndDateChange.bind(this)
 
     this.fetchData = this.fetchData.bind(this);
+
+    this.CustomTooltip = this.CustomTooltip.bind(this)
   }
 
   async fetchData() {
@@ -140,8 +142,8 @@ class AprTrackerShort extends React.Component {
         .map(obj => {
           return {
             xaxis1: dayjs(obj.date).format('MM/DD/YYYY HH:mm:ss'),
-            Percent_Failed_Transactions: obj['%FAIL'],
-            total: obj.TOTAL
+            'Failed Transactions': obj['%FAIL'],
+            'Total Transactions': obj.TOTAL
             }
         })
       this.setState(_ => ({
@@ -177,6 +179,19 @@ class AprTrackerShort extends React.Component {
     this.fetchTxData()
 
   }
+
+  CustomTooltip({ active, payload, label }) {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip" style={{background:'#f2eeed'}}>
+          <p className="label">{`Total Transactions : ${payload[0].value}`}</p>
+          <p className="intro">{`Failed Transactions : ${pctFormatter(payload[1].value)}`}</p>
+        </div>
+      );
+    }
+  
+    return null;
+  };
 
 
   render() {
@@ -246,10 +261,10 @@ class AprTrackerShort extends React.Component {
                 <XAxis dataKey='xaxis1' type="category" domain={['dataMin', 'dataMax']} tickFormatter={formatXAxis}/>
                 <YAxis yAxisId="right" orientation="right" tickFormatter={pctFormatter}/>
                 <YAxis yAxisId="left" orientation="left"/>
-                <Tooltip />
+                <Tooltip content={this.CustomTooltip} />
                 <Legend />
-                <Bar yAxisId="left" dataKey="total" barSize={20} fill="#413ea0" />
-                <Line yAxisId="right" type="monotone" dataKey="Percent_Failed_Transactions" dot={false} strokeWidth={4} stroke="#d49031" />
+                <Bar yAxisId="left" dataKey="Total Transactions" barSize={20} fill="#413ea0" />
+                <Line yAxisId="right" type="monotone" dataKey="Failed Transactions" dot={false} strokeWidth={4} stroke="#d49031" />
               </ComposedChart>
              </ResponsiveContainer>
              </div>
