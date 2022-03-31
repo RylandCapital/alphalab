@@ -35,7 +35,7 @@ function scoreFormatter(params) {
 }
 
 function formatXAxis(tickItem) {
-  return dayjs(tickItem).format('MM/DD/YYYY HH:mm:ss')
+  return dayjs(tickItem).format('MM/DD/YYYY')
 }
 
 function priceFormat(tickItem) {
@@ -146,7 +146,7 @@ class AprTrackerShort extends React.Component {
       let formattedData = apiData
         .map(obj => {
           return {
-            xaxis1: dayjs(obj.date).format('MM/DD/YYYY HH:mm:ss'),
+            xaxis1: dayjs(obj.id).format('MM/DD/YYYY'),
             'Percent Failed Transactions': obj['%FAIL'],
             'Total Transactions': obj.TOTAL
             }
@@ -249,7 +249,7 @@ class AprTrackerShort extends React.Component {
           <Card >
             <CardBody className="card-body-test">
               <FormGroup className="w-25 select2-container mb-3 d-inline-block me-2">
-                <Label className="control-label">TERRA TRANSACTION INFORMATION</Label>
+                <Label className="control-label">TERRA TRANSACTION INFORMATION (MONTHLY)</Label>
               </FormGroup>
               <div style={{height: 600}}>
               <ResponsiveContainer width="100%" height="100%">
