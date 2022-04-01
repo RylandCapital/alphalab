@@ -83,23 +83,23 @@ class Dashboard extends Component {
           options: options1,
         },
         {
-          title: "UST Market Cap 7 Day Percent Change Percentile Rank",
+          title: "UST Market Cap 7 Day Percent Change (%)",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/UST.png",
           color: "primary",
           arrow: 'mdi-arrow-down text-danger',
           value: "",
-          series:  [{ name: "//whitelist.mirror.finance/images/UST.png", data: []}],
+          series:  [{ name: "UST Market Cap 7 Day Percent Change (%)", data: []}],
           options: options2,
         },
         {
-          title: "UST Market Cap 1 Month Percent Change Percentile Rank",
+          title: "UST Market Cap 1 Month Percent Change (%)",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/UST.png",
           color: "info",
           arrow: 'mdi-arrow-up text-success',
           value: "",
-          series:  [{ name: "UST Market Cap 1 Month Percent Change Percentile Ranks", data: []}],
+          series:  [{ name: "UST Market Cap 1 Month Percent Change (%)", data: []}],
           options: options3,
         },
       ],
@@ -115,13 +115,13 @@ class Dashboard extends Component {
           options: options1,
         },
         {
-          title: "LUNA UST Market Cap Ratio Percentile Rank",
+          title: "LUNA UST Market Cap Ratio Rank",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/Luna.png",
           color: "primary",
           arrow: 'mdi-arrow-down text-danger',
           value: "",
-          series:  [{ name: "LUNA UST Market Cap Ratio Percentile Rank", data: []}],
+          series:  [{ name: "LUNA UST Market Cap Ratio Rank", data: []}],
           options: options2,
         },
         {
@@ -137,17 +137,17 @@ class Dashboard extends Component {
       ],
       reports3: [
         {
-          title: "UST Market Cap 1 Month Percent Change Percentile Rank",
+          title: "UST Market Cap 1 Month Percent Change",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/UST.png",
           color: "warning",
           value: "",
           arrow: 'mdi-arrow-up text-success',
-          series: [{ name: "UST Market Cap 1 Month Percent Change Percentile Rank", data: []}],
+          series: [{ name: "UST Market Cap 1 Month Percent Change", data: []}],
           options: options1,
         },
         {
-          title: "LUNA 1 Week Return Percentile Rank",
+          title: "LUNA 1 Week Return",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/Luna.png",
           color: "primary",
@@ -157,13 +157,13 @@ class Dashboard extends Component {
           options: options2,
         },
         {
-          title: "LUNA 1 Month Return Percentile Rank",
+          title: "LUNA 1 Month Return",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/Luna.png",
           color: "info",
           arrow: 'mdi-arrow-up text-success',
           value: "",
-          series:  [{ name: "LUNA 1 Month Return Percentile Rank", data: []}],
+          series:  [{ name: "LUNA 1 Month Return", data: []}],
           options: options3,
         },
       ],
@@ -179,23 +179,23 @@ class Dashboard extends Component {
           options: options1,
         },
         {
-          title: "Daily Registered Accounts Percentile Rank",
+          title: "Daily Registered Accounts 10 Day Moving Average",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/UST.png",
           color: "primary",
           arrow: 'mdi-arrow-down text-danger',
           value: "",
-          series:  [{ name: "Daily Registered Accounts Percentile Rank", data: []}],
+          series:  [{ name: "Daily Registered Accounts 10 Day Moving Average", data: []}],
           options: options2,
         },
         {
-          title: "Daily UST Transaction Volume Percentile Rank($)",
+          title: "Daily UST Transaction Volume 10 Day Moving Average",
           icon: "mdi mdi-email-open",
           imageUrl: "//whitelist.mirror.finance/images/UST.png",
           color: "info",
           arrow: 'mdi-arrow-up text-success',
           value: "",
-          series:  [{ name: "Daily UST Transaction Volume Percentile Rank($)", data: []}],
+          series:  [{ name: "Daily UST Transaction Volume 10 Day Moving Average", data: []}],
           options: options3,
         },
       ],
@@ -294,7 +294,7 @@ fetchAprData1() {
       precision = 'hour'
     }
     let filters = {
-      ticker: 'UST Market Cap 1 Month Percent Change Percentile Rank',
+      ticker: 'UST Market Cap 1 Month Percent Change',
       precision: precision,
     }
     historical.getHistoricalTerraDash(filters).then(apiData => {
@@ -320,7 +320,7 @@ fetchAprData1() {
       precision = 'hour'
     }
     let filters = {
-      ticker: 'terraHealth',
+      ticker: 'Terra Health Score',
       precision: precision,
     }
     historical.getHistoricalTerraDash(filters).then(apiData => {
@@ -332,20 +332,8 @@ fetchAprData1() {
         })
         console.log(formattedData)
         let newState2 = JSON.parse(JSON.stringify(this.state))
-        if ((Number(formattedData[formattedData.length-1].Price))>=50){
-          newState2.value = ' - Amazing Embedded Value' 
-        }
-        else if ((Number(formattedData[formattedData.length-1].Price))<50 && (Number(formattedData[formattedData.length-1].Price))>=40) {
-          newState2.value = ' - High Embedded Value'
-          }
-        else if ((Number(formattedData[formattedData.length-1].Price))<40 && (Number(formattedData[formattedData.length-1].Price))>=20) {
-          newState2.value = ' - Normal Embedded Value'
-          }
-          else if ((Number(formattedData[formattedData.length-1].Price))<20) {
-            newState2.value = ' - Poor Embedded Value'
-          }
-
-        newState2.reports4[0].value = Number(formattedData[formattedData.length-1].Price).toLocaleString('en-US', {maximumFractionDigits:2}) + newState2.value
+      
+        newState2.reports4[0].value = Number(formattedData[formattedData.length-1].Price).toLocaleString('en-US', {maximumFractionDigits:2}) 
         this.setState(newState2)
     })
   }
@@ -385,7 +373,7 @@ fetchAprData1() {
       precision = 'hour'
     }
     let filters = {
-      ticker: 'UST Market Cap 7 Day Percent Change Percentile Rank',
+      ticker: 'UST Market Cap 7 Day Percent Change',
       precision: precision,
     }
     historical.getHistoricalTerraDash(filters).then(apiData => {
@@ -409,7 +397,7 @@ fetchAprData1() {
       precision = 'hour'
     }
     let filters = {
-      ticker: 'LUNA UST Market Cap Ratio Percentile Rank',
+      ticker: 'LUNA UST Market Cap Ratio Rank',
       precision: precision,
     }
     historical.getHistoricalTerraDash(filters).then(apiData => {
@@ -433,7 +421,7 @@ fetchAprData1() {
       precision = 'hour'
     }
     let filters = {
-      ticker: 'LUNA 1 Week Return Percentile Rank',
+      ticker: 'LUNA 1 Week Return',
       precision: precision,
     }
     historical.getHistoricalTerraDash(filters).then(apiData => {
@@ -443,7 +431,7 @@ fetchAprData1() {
           return {xaxis1: dayjs(obj.date).format('MM/DD/YYYY HH:mm:ss'), Price: obj.value}
         })
         let newState2 = JSON.parse(JSON.stringify(this.state))
-        newState2.reports3[1].value = Number(formattedData[formattedData.length-1].Price*100).toLocaleString('en-US', {maximumFractionDigits:2})+'%'
+        newState2.reports3[1].value = Number(formattedData[formattedData.length-1].Price).toLocaleString('en-US', {maximumFractionDigits:2})+'%'
         this.setState(newState2)
     })
   }
@@ -457,7 +445,7 @@ fetchAprData1() {
       precision = 'hour'
     }
     let filters = {
-      ticker: 'Daily Registered Accounts Percentile Rank',
+      ticker: 'Daily Registered Accounts 10 Day Moving Average',
       precision: precision,
     }
     historical.getHistoricalTerraDash(filters).then(apiData => {
@@ -467,7 +455,7 @@ fetchAprData1() {
           return {xaxis1: dayjs(obj.date).format('MM/DD/YYYY HH:mm:ss'), Price: obj.value}
         })
         let newState2 = JSON.parse(JSON.stringify(this.state))
-        newState2.reports4[1].value = Number(formattedData[formattedData.length-1].Price*100).toLocaleString('en-US', {maximumFractionDigits:2})+'%'
+        newState2.reports4[1].value = Number(formattedData[formattedData.length-1].Price).toLocaleString('en-US', {maximumFractionDigits:2})+'%'
         this.setState(newState2)
     })
   }
@@ -505,7 +493,7 @@ fetchAprData1() {
       precision = 'hour'
     }
     let filters = {
-      ticker: 'UST Market Cap 1 Month Percent Change Percentile Rank',
+      ticker: 'UST Market Cap 1 Month Percent Change',
       precision: precision,
     }
     historical.getHistoricalTerraDash(filters).then(apiData => {
@@ -553,7 +541,7 @@ fetchAprData1() {
       precision = 'hour'
     }
     let filters = {
-      ticker: 'LUNA 1 Month Return Percentile Rank',
+      ticker: 'LUNA 1 Month Return',
       precision: precision,
     }
     historical.getHistoricalTerraDash(filters).then(apiData => {
@@ -577,7 +565,7 @@ fetchAprData1() {
       precision = 'hour'
     }
     let filters = {
-      ticker: 'Daily UST Transaction Volume Percentile Rank($)',
+      ticker: 'Daily UST Transaction Volume 10 Day Moving Average',
       precision: precision,
     }
     historical.getHistoricalTerraDash(filters).then(apiData => {
@@ -587,7 +575,7 @@ fetchAprData1() {
           return {xaxis1: dayjs(obj.date).format('MM/DD/YYYY HH:mm:ss'), Price: obj.value}
         })
         let newState2 = JSON.parse(JSON.stringify(this.state))
-        newState2.reports4[2].value = Number(formattedData[formattedData.length-1].Price*100).toLocaleString('en-US', {maximumFractionDigits:2})+'%'
+        newState2.reports4[2].value = Number(formattedData[formattedData.length-1].Price).toLocaleString('en-US', {maximumFractionDigits:2})+' UST'
         this.setState(newState2)
     })
   }
