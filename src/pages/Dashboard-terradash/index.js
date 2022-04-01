@@ -455,7 +455,7 @@ fetchAprData1() {
           return {xaxis1: dayjs(obj.date).format('MM/DD/YYYY HH:mm:ss'), Price: obj.value}
         })
         let newState2 = JSON.parse(JSON.stringify(this.state))
-        newState2.reports4[1].value = Number(formattedData[formattedData.length-1].Price).toLocaleString('en-US', {maximumFractionDigits:2})+'%'
+        newState2.reports4[1].value = Number(formattedData[formattedData.length-1].Price).toLocaleString('en-US', {maximumFractionDigits:2})
         this.setState(newState2)
     })
   }
