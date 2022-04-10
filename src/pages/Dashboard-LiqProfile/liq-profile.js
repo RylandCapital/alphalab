@@ -56,7 +56,7 @@ function priceFormat(tickItem) {
 }
 
 function priceFormat2(tickItem) {
-  return Number(tickItem).toLocaleString("en-US", { maximumFractionDigits: 2 });
+  return "$"+Number(tickItem).toLocaleString("en-US", { maximumFractionDigits: 2 });
 }
 
 const fetchStats = () => {
@@ -377,7 +377,7 @@ class AprTrackerShort extends React.Component {
           <Label>
                   Use Datetime Picker Above To Look At Historical Data
           </Label>
-          <div style={{height: 1000}}>
+          <div style={{height: 850}}>
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart
                 width={400}
@@ -391,7 +391,7 @@ class AprTrackerShort extends React.Component {
                   >
               <CartesianGrid />
               <XAxis type="number" dataKey="Loan_Value" name="Loan_Value" tickFormatter={priceFormat2} domain={['dataMin', 'dataMax']}/>
-              <YAxis type="number" dataKey="Luna_Liquidation_Price" name="Luna_Liquidation_Price" tickFormatter={priceFormat2} domain={['dataMin', 'dataMax']}/>
+              <YAxis type="number" tickCount={20} dataKey="Luna_Liquidation_Price" name="Luna_Liquidation_Price" tickFormatter={priceFormat2} domain={['dataMin', 'dataMax']}/>
               <Tooltip cursor={{ strokeDasharray: '3 3' }}  labelFormatter={tick => {return priceFormat(tick);}} formatter={tick => {return priceFormat2(tick);}}/>
               <Legend/>
               <Scatter name="Liquidatuion Prices of Outstanding Loans" data={this.state.data} fill="000000" line={{stroke: 'black', strokeWidth: 3}}/>
@@ -529,28 +529,4 @@ class AprTrackerShort extends React.Component {
 
 export default AprTrackerShort;
 
-{
-  /*//fetch kujira data (not working because its blocked so might have to make own API to get around it)
-const fetchNodes = () => {
-  return fetch(
-    "https://api.coinhall.org/api/v1/charts/terra/candles?bars=320&from=1641492129&interval=1h&pairAddress=terra1tndcaqxkpc5ce9qee5ggqf430mr2z3pefe5wj6&quoteAsset=uusd&to=1642644129"
-    //"https://api.kujira.app/api/terra1vn5s4s7gpp4yu0mtad8recncyh2h2c6l4qesd6/borrowers/summary"
-  );
-};
 
-
-//fetch luna data
-const fetchHistory = () => {
-  return fetch(
-    "https://api.coinhall.org/api/v1/charts/terra/candles?bars=320&from=1641492129&interval=1h&pairAddress=terra1tndcaqxkpc5ce9qee5ggqf430mr2z3pefe5wj6&quoteAsset=uusd&to=1642644129"
-  );
-};
-
-//fetch live terraswap luna price
-//formula (number of luna/total share)/(number of UST/total share) 
-const fetchLivePrice = () => {
-  return fetch(
-    "https://fcd.terra.dev/wasm/contracts/terra1tndcaqxkpc5ce9qee5ggqf430mr2z3pefe5wj6/store?query_msg={%22pool%22:{}}"
-  );
-};*/
-}
