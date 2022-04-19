@@ -90,7 +90,7 @@ class AprTrackerShort extends React.Component {
       rowData2: [],
       liquidationData: [],
       selectedDate: [new Date()],
-      longDates: [dayjs().subtract(1, "month").toDate(), dayjs().toDate()],
+      longDates: [dayjs().subtract(1, "week").toDate(), dayjs().toDate()],
       reports: [
         {
           title: "Live",
@@ -469,7 +469,7 @@ class AprTrackerShort extends React.Component {
           <Card>
             <CardBody>
             <Label className="control-label">
-                  Liquidations - Last 30 Days
+                  Liquidations - Last 7 Days
             </Label>
               <div className="ag-theme-alpine" style={{ height: 800 }}>
                 <AgGridReact
