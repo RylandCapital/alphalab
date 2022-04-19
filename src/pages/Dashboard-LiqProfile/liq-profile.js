@@ -274,11 +274,11 @@ class AprTrackerShort extends React.Component {
 
   fetchLiquidations() {
     
-    let filters = {
-      from: this.state.longDates[0],
-      to: this.state.longDates[1],
-    }
-    historical.getHistoricalLiquidations(filters).then(apiData => {
+    //let filters = {
+      //from: this.state.longDates[0],
+      //to: this.state.longDates[1],
+    //}
+    historical.getHistoricalLiquidations().then(apiData => {
       let formattedData = apiData
         .map(obj => {
           return{
@@ -469,7 +469,7 @@ class AprTrackerShort extends React.Component {
           <Card>
             <CardBody>
             <Label className="control-label">
-                  Liquidations - Last 30 Days
+                  Liquidations - Last 100 Transactions
             </Label>
               <div className="ag-theme-alpine" style={{ height: 800 }}>
                 <AgGridReact
