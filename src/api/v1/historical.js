@@ -36,7 +36,7 @@ const getHistoricalLiquidationProfile = (filters) => {
 }
 
 const getHistoricalLiquidations = (filters) => {
-  return api.get(`/historical/kujira/liquidations/`)
+  return api.get(`/historical/kujira/liquidations/`, {params:  filters})
 }
 
 const getSpreadHistStats = (filters) => {
