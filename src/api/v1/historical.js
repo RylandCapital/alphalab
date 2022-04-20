@@ -19,6 +19,10 @@ const getHistoricalAprs = (filters) => {
   return api.get(`/historical/pools/${filters.dex}/${filters.ticker}`, { params: filters })
 }
 
+const getHistoricalAprsRolled = (filters) => {
+  return api.get(`/historical/rolled/pools/${filters.dex}/${filters.ticker}`, { params: filters })
+}
+
 const getHistoricalAnchor = (filters) => {
   return api.get(`/historical/anchor/${filters.ticker}`, { params: filters })
 }
@@ -54,5 +58,6 @@ export default {
   getLiquidationProfile:getLiquidationProfile,
   getHistoricalLiquidationProfile:getHistoricalLiquidationProfile,
   getHistoricalLiquidations:getHistoricalLiquidations,
-  getHistoricalLiquidStaking:getHistoricalLiquidStaking
+  getHistoricalLiquidStaking:getHistoricalLiquidStaking,
+  getHistoricalAprsRolled:getHistoricalAprsRolled
 }

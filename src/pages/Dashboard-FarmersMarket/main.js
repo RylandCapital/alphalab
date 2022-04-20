@@ -112,7 +112,7 @@ class AprTrackerShort extends React.Component {
       from: this.state.longDates[0],
       to: this.state.longDates[1],
     }
-    historical.getHistoricalAprs(filters).then(apiData => {
+    historical.getHistoricalAprsRolled(filters).then(apiData => {
       let formattedData = apiData
         .filter(obj => obj.apr7d)
         .map(obj => {
