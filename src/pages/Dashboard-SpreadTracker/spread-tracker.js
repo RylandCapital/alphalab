@@ -292,13 +292,6 @@ class SpreadTracker extends React.Component {
                     headerTooltip="Symbol"
                   ></AgGridColumn>
                   <AgGridColumn
-                    field="Current (1Min Updated)"
-                    sortable={true}
-                    filter={true}
-                    valueFormatter={pctFormatter}
-                    resizable={true}
-                  ></AgGridColumn>
-                  <AgGridColumn
                     field="mean"
                     sortable={true}
                     filter={true}
