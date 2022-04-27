@@ -9,6 +9,7 @@ import DashboardTerra from "../pages/Dashboard-terradash/index";
 import DashboardFarmers from "../pages/Dashboard-FarmersMarket/index";
 import DashboardStaking from "../pages/Dashboard-StakingMarket/index";
 import DashboardLiqProfile from "../pages/Dashboard-LiqProfile/index";
+import DashboardNebulaBackTester from "../pages/Dashboard-NebulaBackTester/index";
 
 // FeeStation
 
@@ -35,6 +36,8 @@ const publicRoutes = [
   { path: "/farmers-market", component: DashboardFarmers },
   { path: "/staking-market", component: DashboardStaking },
   { path: "/liq-profile", component: DashboardLiqProfile },
+
+  { path: "/nebula-backtester", component: DashboardNebulaBackTester  },
 ];
 
 export { authProtectedRoutes, publicRoutes };
