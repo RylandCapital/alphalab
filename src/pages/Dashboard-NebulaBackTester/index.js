@@ -274,11 +274,11 @@ class DashboardNebulaBackTester extends Component {
               <ResponsiveContainer width="100%" height="100%">
               <LineChart width={2000} height={600}
                       margin={{top: 20, right: 30, left: 0, bottom: 0}}>
-                <XAxis dataKey='xaxis1' type="category" domain={['dataMin', 'dataMax']} />
+                <XAxis dataKey='date' type="category" domain={['dataMin', 'dataMax']} />
                 <YAxis  domain={['auto', 'auto']} />
                 <Tooltip  />
                 <Legend />
-                <Line data={this.state.data} type="linear" dataKey="VALUE" dot={false} strokeWidth={4} stroke="#8884d8"/>
+                <Line data={this.state.data[0]} type="linear" dataKey="weighted_return" dot={false} strokeWidth={4} stroke="#8884d8"/>
              </LineChart>
              </ResponsiveContainer>
              </div>
