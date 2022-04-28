@@ -133,6 +133,7 @@ class DashboardNebulaBackTester extends Component {
       dates: newDates,
     }, () => console.log(newDates))
   }
+  
 
   //handle backtest button submit
   handleSubmit = (e) => {
@@ -156,7 +157,6 @@ class DashboardNebulaBackTester extends Component {
     //for each stock with weighting > 0
     assetsToQuery.forEach(a =>{
       
-      console.log(a)
       //set filters
       let filters = {
         ticker: a,
@@ -177,13 +177,13 @@ class DashboardNebulaBackTester extends Component {
 
           datadict.push(formattedData)
           this.setState({
-            //set data to excpanding datadict
+            //set data to expanding datadict
             data:datadict
           }, () => console.log('Pulled Data: '+a+'->'+ 'Number of Assets Now: '+ datadict.length))
       })
     })
-    
 
+    
     //calculate weighted returns by day
   }
 
