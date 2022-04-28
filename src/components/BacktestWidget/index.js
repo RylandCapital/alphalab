@@ -12,10 +12,10 @@ const MiniWidget = (props) => (
         <CardBody>
         <div >
             <div style={{paddingLeft : "10px"}}>
-            <Form>
+            <Form >
               <Label>     
               <label style={{paddingRight : "10px"}}>{report.title}</label>   
-              <input type="text" name={report.title} onChange={props.action} placeholder="Enter Asset Weight…"/>
+              <input id='weights' type="text" name={report.title} onChange={props.action}  placeholder="Enter Asset Weight…"/>
               </Label>
             </Form>
             </div>

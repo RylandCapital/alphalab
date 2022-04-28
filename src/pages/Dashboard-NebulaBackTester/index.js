@@ -21,6 +21,7 @@ class DashboardNebulaBackTester extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      data: [],
       weights:{
         'LUNA':0,
         'UST':0,
@@ -29,7 +30,7 @@ class DashboardNebulaBackTester extends Component {
         'ASTRO':0,
         'PRISM':0
       },
-      dates: [dayjs().toDate(), dayjs().toDate()],
+      dates: [dayjs().subtract(6, 'month').toDate(), dayjs().toDate()],
       sumweights:0,
       assets1:[
         {
@@ -73,7 +74,6 @@ class DashboardNebulaBackTester extends Component {
 
   //sumweights 
   sumWeights() {
-    console.log(this.state.weights)
     let weights = []
     const reducer = (accumulator, curr) => accumulator + curr;
     Object.keys(this.state.weights).forEach(key => {
@@ -82,7 +82,8 @@ class DashboardNebulaBackTester extends Component {
     ) 
     this.setState({sumweights:weights.reduce(reducer)},
     function () {
-    console.log(this.state.sumweights);
+    console.log('Sum Weights: '+this.state.sumweights);
+    console.log('Number of Assets in Data: '+ this.state.data.length);
       });
   }
 
@@ -91,18 +92,32 @@ class DashboardNebulaBackTester extends Component {
     const target = input.target;
     const value = target.value;
     const name = target.name;
-    let newState = JSON.parse(JSON.stringify(this.state))
-    newState.weights[name] = Number(value)
-    this.setState(newState, this.sumWeights)
-
+    this.setState(prevState => ({
+      weights: {
+        ...prevState.weights,
+        [name]: Number(value)
+      }
+    }), this.sumWeights)
   }
 
-  handleClear() {
-    let newState = JSON.parse(JSON.stringify(this.state))
-    Object.keys(this.state.weights).forEach(key => {
-      newState.weights[key] = 0
-    },
-    this.setState(newState, this.sumWeights))
+  handleClear = (e) => {
+    //prevent reset
+    e.preventDefault()
+    //clear boxes
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+
+    const assets = Object.keys(this.state.weights)
+    assets.forEach(x => {
+    this.setState(prevState => ({
+      weights: {
+        ...prevState.weights,
+        [x]: 0
+      },
+      data:[]
+    }), this.sumWeights)})
+
   }
 
   handleStartDateChange(date) {
@@ -120,14 +135,56 @@ class DashboardNebulaBackTester extends Component {
   }
 
   //handle backtest button submit
-  handleSubmit(input) {
+  handleSubmit = (e) => {
+    //prevent reset
+    e.preventDefault()
 
-    //query data for each asset selected
+    //get assets > 0 weight
+    const assets = Object.keys(this.state.weights)
+    const assetsToQuery = []
+    const datadict = []
+    assets.forEach(x => {
+      let weight = this.state.weights[x]
+      if (weight>0){
+        assetsToQuery.push(x)
+      }
+    })
+
+    //log query and add pending wheel?
+    console.log('Querying: '+ assetsToQuery)
+
+    //for each stock with weighting > 0
+    assetsToQuery.forEach(a =>{
+      
+      console.log(a)
+      //set filters
+      let filters = {
+        ticker: a,
+        from: this.state.dates[0],
+        to: this.state.dates[1],
+      }
+
+      //pull data from apis
+      historical.getHistoricalBacktester(filters).then(apiData => {
+
+        let formattedData = apiData
+          .map(obj => {
+            return {date: dayjs(obj.timestamp).format('MM/DD/YYYY'), 
+                    name:a,
+                    weighted_return:(this.state.weights[a]/100)*obj['pct_change']}
+                    
+          })
+
+          datadict.push(formattedData)
+          this.setState({
+            //set data to excpanding datadict
+            data:datadict
+          }, () => console.log('Pulled Data: '+a+'->'+ 'Number of Assets Now: '+ datadict.length))
+      })
+    })
+    
 
     //calculate weighted returns by day
-
-    //sum and return to state
-  
   }
 
 
@@ -184,7 +241,7 @@ class DashboardNebulaBackTester extends Component {
               <FormGroup className="w-25 d-inline-block pb-2 me-2">
                 <DatePicker
                   className="form-control"
-                  //selected={this.state.dates[0]}
+                  selected={this.state.dates[0]}
                   onChange={this.handleStartDateChange}
                 />
               </FormGroup>
@@ -194,16 +251,16 @@ class DashboardNebulaBackTester extends Component {
               <FormGroup className="w-25 d-inline-block pb-2">
                 <DatePicker
                   className="form-control"
-                  //selected={this.state.dates[1]}
+                  selected={this.state.dates[1]}
                   onChange={this.handleEndDateChange}
                 />
               </FormGroup>
 
               {/* Backtest/Clear Buttons*/}
               <Form>
-                <button type="submit" onSubmit={this.handleSubmit}>BACKTEST</button>
+                <button type="submit" onClick={this.handleSubmit}>BACKTEST</button>
                 <div style={{paddingTop : "10px"}}>
-                <button type="submit" onSubmit={this.handleClear}>CLEAR</button>
+                <button type="submit" onClick={this.handleClear}>CLEAR</button>
                 </div>
               </Form>
              
