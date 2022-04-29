@@ -74,7 +74,6 @@ class DashboardNebulaBackTester extends Component {
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
     this.useEffect = this.useEffect.bind(this);
     this.fetchData = this.fetchData.bind(this);
-
   }
 
 
@@ -121,7 +120,7 @@ class DashboardNebulaBackTester extends Component {
         ...prevState.weights,
         [x]: 0
       },
-      data:[]
+      data2:[]
     }), this.sumWeights)})
 
   }
@@ -175,7 +174,35 @@ class DashboardNebulaBackTester extends Component {
     Promise.all([this.useEffect()])
   }
 
+  task1() {
+    return new Promise(function(resolve, reject) {
+      console.log("task 1")
+      setTimeout(function() {
+        resolve('foo');
+      }, Math.random() * 2000);
+    })
+  }
+  
+  task2() {
+    return new Promise(function(resolve, reject) {
+      console.log("task 2")
+      setTimeout(function() {
+        resolve('bar');
+      }, Math.random() * 2000);
+    })
+  }
+  
+  task3() {
+    console.log("task 3")
+  }
 
+ test4(){
+  
+  Promise.all([task1(), task2()]).then(function(values) {
+    console.log(values);
+    task3()
+  });
+}
 
   render() {
     return(
