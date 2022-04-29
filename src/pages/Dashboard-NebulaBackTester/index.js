@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import Select from "react-select"
 
 import DatePicker from "react-datepicker"
@@ -14,6 +14,8 @@ import { Col, Row, Container, Card, CardBody, Form, Label, FormGroup} from 'reac
 
 import {CartesianGrid, ComposedChart, LineChart, Line, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts'
 
+import * as api from '../../helpers/api_helper'
+
 import dayjs from 'dayjs'
 
 
@@ -22,6 +24,7 @@ class DashboardNebulaBackTester extends Component {
     super(props)
     this.state = {
       data: [],
+      data2:[],
       weights:{
         'LUNA':0,
         'UST':0,
@@ -69,6 +72,9 @@ class DashboardNebulaBackTester extends Component {
     this.sumWeights=this.sumWeights.bind(this);
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
+    this.useEffect = this.useEffect.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+
   }
 
 
@@ -135,56 +141,38 @@ class DashboardNebulaBackTester extends Component {
   }
   
 
-  //handle backtest button submit
-  handleSubmit = (e) => {
-    //prevent reset
-    e.preventDefault()
+  fetchData(name) {
+    //set filters
+    let filters = {
+      ticker: name,
+      from: this.state.dates[0],
+      to: this.state.dates[1],
+    }
 
-    //get assets > 0 weight
-    const assets = Object.keys(this.state.weights)
-    const assetsToQuery = []
-    const datadict = []
-    assets.forEach(x => {
-      let weight = this.state.weights[x]
-      if (weight>0){
-        assetsToQuery.push(x)
-      }
-    })
 
-    //log query and add pending wheel?
-    console.log('Querying: '+ assetsToQuery)
-
-    //for each stock with weighting > 0
-    assetsToQuery.forEach(a =>{
-      
-      //set filters
-      let filters = {
-        ticker: a,
-        from: this.state.dates[0],
-        to: this.state.dates[1],
-      }
-
-      //pull data from apis
-      historical.getHistoricalBacktester(filters).then(apiData => {
-
+    //pull data from apis
+    historical.getHistoricalBacktester(filters)
+      .then(apiData => {
         let formattedData = apiData
-          .map(obj => {
+        .map(obj => {
             return {date: dayjs(obj.timestamp).format('MM/DD/YYYY'), 
-                    name:a,
-                    weighted_return:(this.state.weights[a]/100)*obj['pct_change']}
+                    name:name,
+                    weighted_return:(this.state.weights[name]/100)*obj['pct_change']}
                     
           })
+        this.setState(prevState => ({
+            data2: [...prevState.data2, formattedData]}))
+      }).then(x=>{console.log(this.state.data2)})
+      
+  }
 
-          datadict.push(formattedData)
-          this.setState({
-            //set data to expanding datadict
-            data:datadict
-          }, () => console.log('Pulled Data: '+a+'->'+ 'Number of Assets Now: '+ datadict.length))
-      })
-    })
+  async useEffect() {
+     Object.keys(this.state.weights).forEach(name => this.fetchData(name))
+  }
 
-    
-    //calculate weighted returns by day
+  async handleSubmit(e) {
+    e.preventDefault()
+    Promise.all([this.useEffect()])
   }
 
 
@@ -278,7 +266,7 @@ class DashboardNebulaBackTester extends Component {
                 <YAxis  domain={['auto', 'auto']} />
                 <Tooltip  />
                 <Legend />
-                <Line data={this.state.data[0]} type="linear" dataKey="weighted_return" dot={false} strokeWidth={4} stroke="#8884d8"/>
+                <Line data={this.state.data2[0]} type="linear" dataKey="weighted_return" dot={false} strokeWidth={4} stroke="#8884d8"/>
              </LineChart>
              </ResponsiveContainer>
              </div>
