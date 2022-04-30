@@ -18,6 +18,14 @@ import * as api from '../../helpers/api_helper'
 
 import dayjs from 'dayjs'
 
+function pctFormatter(params) {
+  return Number((Number(params)-1)*100).toFixed(2) + '%'
+}
+
+const dateFormatter = date => {
+  // return moment(date).unix();
+  return dayjs(date).format('MM/DD/YYYY');
+};
 
 class DashboardNebulaBackTester extends Component {
   constructor(props) {
@@ -33,7 +41,7 @@ class DashboardNebulaBackTester extends Component {
         'ASTRO':0,
         'PRISM':0
       },
-      dates: [dayjs().subtract(6, 'month').toDate(), dayjs().toDate()],
+      dates: [dayjs().subtract(3, 'month').toDate(), dayjs().toDate()],
       sumweights:0,
       assets1:[
         {
@@ -72,8 +80,8 @@ class DashboardNebulaBackTester extends Component {
     this.sumWeights=this.sumWeights.bind(this);
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
-    this.useEffect = this.useEffect.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.groupByKey = this.groupByKey.bind(this);
   }
 
 
@@ -120,7 +128,8 @@ class DashboardNebulaBackTester extends Component {
         ...prevState.weights,
         [x]: 0
       },
-      data2:[]
+      data2:[],
+      data:[]
     }), this.sumWeights)})
 
   }
@@ -139,8 +148,12 @@ class DashboardNebulaBackTester extends Component {
     }, () => console.log(newDates))
   }
   
+  groupByKey = (list, key) => list.reduce(
+    (hash, obj) => ({...hash, [obj[key]]:( hash[obj[key]] || [] ).concat(obj.weighted_return)}), {})
 
-  fetchData(name) {
+  fetchData() {
+
+    Object.keys(this.state.weights).forEach(name => {
     //set filters
     let filters = {
       ticker: name,
@@ -148,30 +161,55 @@ class DashboardNebulaBackTester extends Component {
       to: this.state.dates[1],
     }
 
-
     //pull data from apis
     historical.getHistoricalBacktester(filters)
       .then(apiData => {
         let formattedData = apiData
         .map(obj => {
-            return {date: dayjs(obj.timestamp).format('MM/DD/YYYY'), 
+            return {date: obj.timestamp, 
                     name:name,
                     weighted_return:(this.state.weights[name]/100)*obj['pct_change']}
                     
           })
         this.setState(prevState => ({
-            data2: [...prevState.data2, formattedData]}))
-      }).then(x=>{console.log(this.state.data2)})
-      
-  }
+            data2: [].concat.apply([],[...prevState.data2, formattedData])}))
+      }).then(x=>{
+        
+        const grouped = this.groupByKey(this.state.data2, 'date')
+       
 
-  async useEffect() {
-     Object.keys(this.state.weights).forEach(name => this.fetchData(name))
+        const dailyWeighted = Object.keys(grouped).map(day =>{
+          return {date:day, weighted_return:grouped[day].reduce((a, b) => a + b, 0)}
+        })
+
+        const one_dailyWeighted = Object.keys(dailyWeighted).map(day =>{
+          return {date:dailyWeighted[day].date, weighted_return:1+dailyWeighted[day].weighted_return}
+        })
+
+        const equityCurve = []
+        var i;
+        x = 1
+        for (i = 0; i < one_dailyWeighted.length; i++){
+        x = x * one_dailyWeighted[i].weighted_return
+        equityCurve.push({date: new Date(one_dailyWeighted[i].date), weighted_return:x})
+      }
+     
+      
+              
+      console.log(equityCurve)
+      this.setState({data:equityCurve.sort(function (a, b) {
+        var dateA = new Date(a.date), dateB = new Date(b.date)
+        return dateA - dateB
+      })})
+
+      })
+  })
+      
   }
 
   async handleSubmit(e) {
     e.preventDefault()
-    this.useEffect()
+    this.fetchData()
   }
 
   render() {
@@ -259,11 +297,11 @@ class DashboardNebulaBackTester extends Component {
               <ResponsiveContainer width="100%" height="100%">
               <LineChart width={2000} height={600}
                       margin={{top: 20, right: 30, left: 0, bottom: 0}}>
-                <XAxis dataKey='date' type="category" domain={['dataMin', 'dataMax']} />
+                <XAxis tickFormatter = {dateFormatter} dataKey='date' type="category" domain={['dataMin', 'dataMax']} />
                 <YAxis  domain={['auto', 'auto']} />
-                <Tooltip  />
+                <Tooltip  labelFormatter={tick => {return dateFormatter(tick);}} formatter={tick => {return pctFormatter(tick);}}/>
                 <Legend />
-                <Line data={this.state.data2[0]} type="linear" dataKey="weighted_return" dot={false} strokeWidth={4} stroke="#8884d8"/>
+                <Line data={this.state.data} type="linear" dataKey="weighted_return" dot={false} strokeWidth={4} stroke="#8884d8"/>
              </LineChart>
              </ResponsiveContainer>
              </div>
