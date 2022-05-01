@@ -33,6 +33,8 @@ class DashboardNebulaBackTester extends Component {
     this.state = {
       data: [],
       data2:[],
+      bench: [],
+      bench2:[],
       weights:{
         'LUNA':0,
         'UST':0,
@@ -129,7 +131,9 @@ class DashboardNebulaBackTester extends Component {
         [x]: 0
       },
       data2:[],
-      data:[]
+      data:[],
+      bench2:[],
+      bench:[],
     }), this.sumWeights)})
 
   }
@@ -177,7 +181,7 @@ class DashboardNebulaBackTester extends Component {
         
         const grouped = this.groupByKey(this.state.data2, 'date')
        
-
+        console.log(grouped)
         const dailyWeighted = Object.keys(grouped).map(day =>{
           return {date:day, weighted_return:grouped[day].reduce((a, b) => a + b, 0)}
         })
@@ -185,24 +189,64 @@ class DashboardNebulaBackTester extends Component {
         const one_dailyWeighted = Object.keys(dailyWeighted).map(day =>{
           return {date:dailyWeighted[day].date, weighted_return:1+dailyWeighted[day].weighted_return}
         })
+        console.log(one_dailyWeighted)
 
         const equityCurve = []
         var i;
         x = 1
         for (i = 0; i < one_dailyWeighted.length; i++){
         x = x * one_dailyWeighted[i].weighted_return
-        equityCurve.push({date: new Date(one_dailyWeighted[i].date), weighted_return:x})
+        equityCurve.push({date: new Date(one_dailyWeighted[i].date), 'Strategy Return':x})
       }
-     
-      
-              
       console.log(equityCurve)
+                 
+      //console.log(equityCurve)
       this.setState({data:equityCurve.sort(function (a, b) {
         var dateA = new Date(a.date), dateB = new Date(b.date)
         return dateA - dateB
       })})
 
       })
+
+      
+      ///benchmark
+      /*historical.getHistoricalBacktester({
+        ticker: "LUNA",
+        from: this.state.dates[0],
+        to: this.state.dates[1],
+      }).then(apiData => {
+        let formattedData2 = apiData
+        .map(obj => {
+            return {date: obj.timestamp, 
+                    name:"LUNA",
+                    weighted_return:obj['pct_change']
+                  }
+                    
+          })
+        this.setState(x => ({
+            bench2: formattedData2}))
+      }).then(x=>{
+        
+        const one_dailyWeighted = Object.keys(this.state.bench2).map(day =>{
+          return {date:this.state.bench2[day].date, weighted_return:1+this.state.bench2[day].weighted_return}
+        })
+
+        const equityCurve = []
+        var i;
+        x = 1
+        for (i = 0; i < one_dailyWeighted.length; i++){
+        x = x * one_dailyWeighted[i].weighted_return
+        equityCurve.push({date: new Date(one_dailyWeighted[i].date), 'Luna Return':x})
+      }
+     
+      
+      //console.log(equityCurve)
+      this.setState({bench:equityCurve.sort(function (a, b) {
+        var dateA = new Date(a.date), dateB = new Date(b.date)
+        return dateA - dateB
+      })})
+
+      })*/
   })
       
   }
@@ -297,11 +341,52 @@ class DashboardNebulaBackTester extends Component {
               <ResponsiveContainer width="100%" height="100%">
               <LineChart width={2000} height={600}
                       margin={{top: 20, right: 30, left: 0, bottom: 0}}>
-                <XAxis tickFormatter = {dateFormatter} dataKey='date' type="category" domain={['dataMin', 'dataMax']} />
-                <YAxis  domain={['auto', 'auto']} />
+              <CartesianGrid strokeDasharray="3 3" />
+                
+                <XAxis 
+                tickFormatter = {dateFormatter} 
+                dataKey='date' type="category" 
+                domain={['dataMin', 'dataMax']}
+                xAxisId="btest"
+                />
+
+                <XAxis 
+                tickFormatter = {dateFormatter} 
+                dataKey='date' type="category" 
+                domain={['dataMin', 'dataMax']}
+                xAxisId="bench"
+                hide="true"
+                />
+
+                <YAxis yAxisId="left" orientation="left" domain={['auto', 'auto']} />
+
                 <Tooltip  labelFormatter={tick => {return dateFormatter(tick);}} formatter={tick => {return pctFormatter(tick);}}/>
                 <Legend />
-                <Line data={this.state.data} type="linear" dataKey="weighted_return" dot={false} strokeWidth={4} stroke="#8884d8"/>
+
+                <Line 
+                 xAxisId="btest"
+                 yAxisId="left"
+                 data={this.state.data}
+                 type="linear" 
+                 dataKey="Strategy Return"
+                 dot={false}
+                 strokeWidth={4}
+                 stroke="#8884d8"
+                 />
+
+                <Line 
+                 xAxisId="bench"
+                 yAxisId="left"
+                 data={this.state.bench}
+                 type="linear" 
+                 dataKey="Luna Return"
+                 dot={false}
+                 strokeWidth={3}
+                 strokeDashArray="4"
+                 stroke="#FFBF00"
+                 />
+
+
              </LineChart>
              </ResponsiveContainer>
              </div>
