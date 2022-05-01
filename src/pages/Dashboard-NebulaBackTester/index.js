@@ -1,18 +1,17 @@
 import React, { Component, useState } from 'react'
-import Select from "react-select"
 
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
 import historical from '../../api/v1/historical';
-import { Link } from "react-router-dom";
 
 import BacktestWidget from '../../components/BacktestWidget'
+import MiniWidget from '../../components/MiniWidget'
 import CardWelcome from "./card-welcome"
 import Breadcrumbs from "../../components/Common/Breadcrumb"
 import { Col, Row, Container, Card, CardBody, Form, Label, FormGroup} from 'reactstrap';
 
-import {CartesianGrid, ComposedChart, LineChart, Line, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts'
+import {CartesianGrid, LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts'
 
 import * as api from '../../helpers/api_helper'
 
@@ -75,10 +74,69 @@ class DashboardNebulaBackTester extends Component {
           ticker: 'PRISM',
         },
       ],
+      reports : [
+        {
+          title: "Strategy Sharpe Ratio",
+          icon: "mdi mdi-email-open",
+          imageUrl: "//alphadefi.fund/wp-content/uploads/2022/03/logo-original-1000-ps_ccexpress.png",
+          color: "warning",
+          value: "",
+          arrow: 'mdi-arrow-up text-success',
+          series: [{ name: "Strategy Sharpe Ratio", data: []}],
+        },
+        {
+          title: "Strategy Total Return (%)",
+          icon: "mdi mdi-email-open",
+          imageUrl: "//alphadefi.fund/wp-content/uploads/2022/03/logo-original-1000-ps_ccexpress.png",
+          color: "primary",
+          arrow: 'mdi-arrow-down text-danger',
+          value: "",
+          series:  [{ name: "Strategy Total Return (%)", data: []}],
+        },
+        {
+          title: "Strategy Daily Volatility (%)",
+          icon: "mdi mdi-email-open",
+          imageUrl: "//alphadefi.fund/wp-content/uploads/2022/03/logo-original-1000-ps_ccexpress.png",
+          color: "info",
+          arrow: 'mdi-arrow-up text-success',
+          value: "",
+          series:  [{ name: "Strategy Daily Volatility (%)", data: []}],
+        },
+      ],
+      reportsBench : [
+        {
+          title: "LUNA Sharpe Ratio",
+          icon: "mdi mdi-email-open",
+          imageUrl: "//whitelist.mirror.finance/images/Luna.png",
+          color: "warning",
+          value: "",
+          arrow: 'mdi-arrow-up text-success',
+          series: [{ name: "LUNA Sharpe Ratio", data: []}],
+        },
+        {
+          title: "LUNA Total Return (%)",
+          icon: "mdi mdi-email-open",
+          imageUrl: "//whitelist.mirror.finance/images/Luna.png",
+          color: "primary",
+          arrow: 'mdi-arrow-down text-danger',
+          value: "",
+          series:  [{ name: "LUNA Total Return (%)", data: []}],
+        },
+        {
+          title: "LUNA Daily Volatility (%)",
+          icon: "mdi mdi-email-open",
+          imageUrl: "//whitelist.mirror.finance/images/Luna.png",
+          color: "info",
+          arrow: 'mdi-arrow-up text-success',
+          value: "",
+          series:  [{ name: "LUNA Daily Volatility (%)", data: []}],
+        },
+      ]
       
     }
     this.handleWeights= this.handleWeights.bind(this);
     this.handleSubmit= this.handleSubmit.bind(this);
+    this.handleProRata = this.handleProRata.bind(this);
     this.sumWeights=this.sumWeights.bind(this);
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -95,7 +153,7 @@ class DashboardNebulaBackTester extends Component {
       weights.push(this.state.weights[key])
       }
     ) 
-    this.setState({sumweights:weights.reduce(reducer)},
+    this.setState({sumweights:Math.round(weights.reduce(reducer))},
     function () {
     console.log('Sum Weights: '+this.state.sumweights);
     console.log('Number of Assets in Data: '+ this.state.data.length);
@@ -113,6 +171,25 @@ class DashboardNebulaBackTester extends Component {
         [name]: Number(value)
       }
     }), this.sumWeights)
+  }
+
+  //update weights
+  handleProRata = (e) => {
+    e.preventDefault()
+    const assets = Object.keys(this.state.weights)
+    console.log(assets.length)
+    assets.forEach(x => {
+    this.setState(prevState => ({
+      weights: {
+        ...prevState.weights,
+        [x]: 100/assets.length
+      },
+    }), this.sumWeights)})
+
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = (100/assets.length).toFixed(2))
+    );
+
   }
 
   handleClear = (e) => {
@@ -164,8 +241,7 @@ class DashboardNebulaBackTester extends Component {
       from: this.state.dates[0],
       to: this.state.dates[1],
     }
-
-    //pull data from apis
+    //assets
     historical.getHistoricalBacktester(filters)
       .then(apiData => {
         let formattedData = apiData
@@ -181,15 +257,20 @@ class DashboardNebulaBackTester extends Component {
         
         const grouped = this.groupByKey(this.state.data2, 'date')
        
-        console.log(grouped)
+        //console.log(grouped)
         const dailyWeighted = Object.keys(grouped).map(day =>{
           return {date:day, weighted_return:grouped[day].reduce((a, b) => a + b, 0)}
         })
 
+        //console.log(dailyWeighted)
+
         const one_dailyWeighted = Object.keys(dailyWeighted).map(day =>{
           return {date:dailyWeighted[day].date, weighted_return:1+dailyWeighted[day].weighted_return}
+        }).sort(function (a, b) {
+          var dateA = new Date(a.date), dateB = new Date(b.date)
+          return dateA - dateB
         })
-        console.log(one_dailyWeighted)
+        //console.log(one_dailyWeighted)
 
         const equityCurve = []
         var i;
@@ -198,9 +279,7 @@ class DashboardNebulaBackTester extends Component {
         x = x * one_dailyWeighted[i].weighted_return
         equityCurve.push({date: new Date(one_dailyWeighted[i].date), 'Strategy Return':x})
       }
-      console.log(equityCurve)
-                 
-      //console.log(equityCurve)
+              
       this.setState({data:equityCurve.sort(function (a, b) {
         var dateA = new Date(a.date), dateB = new Date(b.date)
         return dateA - dateB
@@ -208,9 +287,8 @@ class DashboardNebulaBackTester extends Component {
 
       })
 
-      
       ///benchmark
-      /*historical.getHistoricalBacktester({
+      historical.getHistoricalBacktester({
         ticker: "LUNA",
         from: this.state.dates[0],
         to: this.state.dates[1],
@@ -229,6 +307,9 @@ class DashboardNebulaBackTester extends Component {
         
         const one_dailyWeighted = Object.keys(this.state.bench2).map(day =>{
           return {date:this.state.bench2[day].date, weighted_return:1+this.state.bench2[day].weighted_return}
+        }).sort(function (a, b) {
+          var dateA = new Date(a.date), dateB = new Date(b.date)
+          return dateA - dateB
         })
 
         const equityCurve = []
@@ -239,14 +320,12 @@ class DashboardNebulaBackTester extends Component {
         equityCurve.push({date: new Date(one_dailyWeighted[i].date), 'Luna Return':x})
       }
      
-      
-      //console.log(equityCurve)
       this.setState({bench:equityCurve.sort(function (a, b) {
         var dateA = new Date(a.date), dateB = new Date(b.date)
         return dateA - dateB
       })})
 
-      })*/
+      }).then(x=>{console.log('finished')})
   })
       
   }
@@ -325,7 +404,10 @@ class DashboardNebulaBackTester extends Component {
 
               {/* Backtest/Clear Buttons*/}
               <Form>
+                <button type="submit" onClick={this.handleProRata}>APPLY PRO RATA WEIGHTS</button>
+                <div style={{paddingTop : "10px"}}>
                 <button type="submit" onClick={this.handleSubmit}>BACKTEST</button>
+                </div>
                 <div style={{paddingTop : "10px"}}>
                 <button type="submit" onClick={this.handleClear}>CLEAR</button>
                 </div>
@@ -358,7 +440,7 @@ class DashboardNebulaBackTester extends Component {
                 hide="true"
                 />
 
-                <YAxis yAxisId="left" orientation="left" domain={['auto', 'auto']} />
+                <YAxis tickFormatter={pctFormatter} yAxisId="left" orientation="left" domain={['auto', 'auto']} />
 
                 <Tooltip  labelFormatter={tick => {return dateFormatter(tick);}} formatter={tick => {return pctFormatter(tick);}}/>
                 <Legend />
@@ -378,11 +460,10 @@ class DashboardNebulaBackTester extends Component {
                  xAxisId="bench"
                  yAxisId="left"
                  data={this.state.bench}
-                 type="linear" 
+                 type="monotone" 
                  dataKey="Luna Return"
-                 dot={false}
-                 strokeWidth={3}
-                 strokeDashArray="4"
+                 strokeDasharray="7 7"
+                 strokeWidth={4}
                  stroke="#FFBF00"
                  />
 
@@ -393,14 +474,13 @@ class DashboardNebulaBackTester extends Component {
           </CardBody>
         </Card>
 
-
-
-
-
-
-
-
-              
+        <Row>
+        <MiniWidget reports={this.state.reports}/>
+        </Row>
+        <Row>
+        <MiniWidget reports={this.state.reportsBench}/>     
+        </Row>
+        
 
             </Col>
           </Row>

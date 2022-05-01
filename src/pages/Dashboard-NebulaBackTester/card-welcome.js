@@ -19,16 +19,21 @@ class CardWelcome extends Component {
                   <div className="text-muted">
                     <p className="mb-1">
                       <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
-                      Choose Your Assets
+                      Choose your assets by adding weights manually or..
                     </p>
                     <p className="mb-1">
                       <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
-                      Choose Your Weightings
+                      Select `APPLY PTO RATA WEIGHTS` to view an equal weighted index of all assets
+                    </p>
+                    <p className="mb-1">
+                      <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
+                      Choose the dates you want to see backtested
                     </p>
                     <p className="mb-0">
                       <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
-                      Compare To A Benchmark
+                      View the performance per $1 invested for your selected assets and weightings
                     </p>
+                    
                   </div>
                 </div>
               </Col>
