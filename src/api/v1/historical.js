@@ -1,5 +1,9 @@
 import * as api from '../../helpers/api_helper'
 
+const getHistoricalBacktester = (filters) => {
+  return api.get(`/historical/backtester/${filters.ticker}`, { params: filters })
+}
+
 const getHistoricalLiquidStaking = (filters) => {
   return api.get(`/historical/liquidstaking/${filters.ticker}`, { params: filters })
 }
@@ -48,6 +52,7 @@ const getSpreadHistStats = (filters) => {
 }
 
 export default {
+  getHistoricalBacktester:getHistoricalBacktester,
   getHistoricalLongAprs: getHistoricalLongAprs,
   getHistoricalShortAprs: getHistoricalShortAprs,
   getHistoricalTerraDash: getHistoricalTerraDash,
