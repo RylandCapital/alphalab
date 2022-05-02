@@ -40,7 +40,10 @@ class DashboardNebulaBackTester extends Component {
         'aUST':0,
         'ANC':0,
         'ASTRO':0,
-        'PRISM':0
+        'PRISM':0,
+        'PSI':0,
+        'pLUNA':0,
+        'yLUNA':0
       },
       dates: [dayjs().subtract(3, 'month').toDate(), dayjs().toDate()],
       sumweights:0,
@@ -72,6 +75,21 @@ class DashboardNebulaBackTester extends Component {
         {
           title: 'PRISM',
           ticker: 'PRISM',
+        },
+      ],
+      assets3:[
+        {
+          title: 'PSI',
+          ticker: 'PSI',
+        },
+        {
+          title: 'pLUNA',
+          ticker: 'pLUNA',
+        },
+
+        {
+          title: 'yLUNA',
+          ticker: 'yLUNA',
         },
       ],
       reports : [
@@ -419,7 +437,15 @@ class DashboardNebulaBackTester extends Component {
                   action={this.handleWeights}
                 />
               </Row>
-
+              </div>
+              {/* Assets Row 2*/}
+              <div>
+              <Row>
+                <BacktestWidget
+                  reports={this.state.assets3}
+                  action={this.handleWeights}
+                />
+              </Row>
               </div>
               {/* Sum of Weights*/}
               <h4>

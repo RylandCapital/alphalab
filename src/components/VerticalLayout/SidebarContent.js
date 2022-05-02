@@ -143,7 +143,7 @@ class SidebarContent extends Component {
               <li>
                 <Link to="/nebula-backtester">
                   <i className="bx bx-home-circle me-2" />
-                  <span>{this.props.t("Backtesting *Beta*")}</span>
+                  <span>{this.props.t("Strategy Backtester Beta")}</span>
                 </Link>
               </li>
 
