@@ -319,6 +319,7 @@ class DashboardNebulaBackTester extends Component {
         x = x * one_dailyWeighted[i].weighted_return
         equityCurve.push({date: new Date(one_dailyWeighted[i].date), 'Strategy Return':x})
       }
+      //console.log(equityCurve)
               
       this.setState({data:equityCurve.sort(function (a, b) {
         var dateA = new Date(a.date), dateB = new Date(b.date)
@@ -351,6 +352,7 @@ class DashboardNebulaBackTester extends Component {
           var dateA = new Date(a.date), dateB = new Date(b.date)
           return dateA - dateB
         })
+        //console.log(one_dailyWeighted)
 
         const equityCurve = []
         var i;
@@ -359,7 +361,7 @@ class DashboardNebulaBackTester extends Component {
         x = x * one_dailyWeighted[i].weighted_return
         equityCurve.push({date: new Date(one_dailyWeighted[i].date), 'Luna Return':x})
       }
-     
+      
       this.setState({bench:equityCurve.sort(function (a, b) {
         var dateA = new Date(a.date), dateB = new Date(b.date)
         return dateA - dateB
@@ -385,13 +387,13 @@ class DashboardNebulaBackTester extends Component {
 
           let newState = JSON.parse(JSON.stringify(this.state.reports))
           newState[0].value = sharpe
-          newState[1].value = tr.toFixed(2)+'%'
+          newState[1].value = (tr*100).toFixed(2)+'%'
           newState[2].value = sd.toFixed(2)
           this.setState({reports:newState})
 
           let newStatebench = JSON.parse(JSON.stringify(this.state.reportsBench))
           newStatebench[0].value = sharpebench
-          newStatebench[1].value = trbench.toFixed(2)+'%'
+          newStatebench[1].value = (trbench*100).toFixed(2)+'%'
           newStatebench[2].value = sdbench.toFixed(2)
           this.setState({reportsBench:newStatebench})
           
