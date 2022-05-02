@@ -23,7 +23,7 @@ class CardWelcome extends Component {
                     </p>
                     <p className="mb-1">
                       <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
-                      Select `APPLY PTO RATA WEIGHTS` to view an equal weighted index of all assets
+                      Select `APPLY PRO RATA WEIGHTS` to view an equal weighted index of all assets
                     </p>
                     <p className="mb-1">
                       <i className="mdi mdi-circle-medium align-middle text-primary me-1"/>{" "}
