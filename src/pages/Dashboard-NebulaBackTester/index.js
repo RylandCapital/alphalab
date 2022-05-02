@@ -142,6 +142,7 @@ class DashboardNebulaBackTester extends Component {
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
     this.fetchData = this.fetchData.bind(this);
     this.groupByKey = this.groupByKey.bind(this);
+    this.standardDeviation = this.standardDeviation.bind(this)
   }
 
 
@@ -195,6 +196,17 @@ class DashboardNebulaBackTester extends Component {
   handleClear = (e) => {
     //prevent reset
     e.preventDefault()
+
+    let newState = JSON.parse(JSON.stringify(this.state.reports))
+    newState[0].value = ''
+    newState[1].value = ''
+    newState[2].value = ''
+
+
+    let newStatebench = JSON.parse(JSON.stringify(this.state.reportsBench))
+    newStatebench[0].value = ''
+    newStatebench[1].value = ''
+    newStatebench[2].value = ''
     //clear boxes
     Array.from(document.querySelectorAll("input")).forEach(
       input => (input.value = "")
@@ -211,6 +223,8 @@ class DashboardNebulaBackTester extends Component {
       data:[],
       bench2:[],
       bench:[],
+      reportsBench:newStatebench,
+      reports:newState,
     }), this.sumWeights)})
 
   }
@@ -231,6 +245,14 @@ class DashboardNebulaBackTester extends Component {
   
   groupByKey = (list, key) => list.reduce(
     (hash, obj) => ({...hash, [obj[key]]:( hash[obj[key]] || [] ).concat(obj.weighted_return)}), {})
+  
+  standardDeviation = (arr, usePopulation = false) => {
+      const mean = arr.reduce((acc, val) => acc + val, 0) / arr.length;
+      return Math.sqrt(
+        arr.reduce((acc, val) => acc.concat((val - mean) ** 2), []).reduce((acc, val) => acc + val, 0) /
+          (arr.length - (usePopulation ? 0 : 1))
+      );
+    };
 
   fetchData() {
 
@@ -325,7 +347,41 @@ class DashboardNebulaBackTester extends Component {
         return dateA - dateB
       })})
 
-      }).then(x=>{console.log('finished')})
+      }).then(x=>{
+
+          const equitycurve = []
+          this.state.data.forEach(day=> {
+            equitycurve.push(day['Strategy Return'])
+          })
+          const sd = this.standardDeviation(equitycurve);
+          const tr = equitycurve[equitycurve.length - 1]-1
+          const sharpe = (tr/sd).toFixed(2)
+
+          const bench = []
+          this.state.bench.forEach(day=> {
+            bench.push(day['Luna Return'])
+          })
+          const sdbench = this.standardDeviation(bench);
+          const trbench = bench[bench.length - 1]-1
+          const sharpebench = (trbench/sdbench).toFixed(2)
+
+          let newState = JSON.parse(JSON.stringify(this.state.reports))
+          newState[0].value = sharpe
+          newState[1].value = tr.toFixed(2)+'%'
+          newState[2].value = sd.toFixed(2)
+          this.setState({reports:newState})
+
+          let newStatebench = JSON.parse(JSON.stringify(this.state.reportsBench))
+          newStatebench[0].value = sharpebench
+          newStatebench[1].value = trbench.toFixed(2)+'%'
+          newStatebench[2].value = sdbench.toFixed(2)
+          this.setState({reportsBench:newStatebench})
+          
+          
+
+
+
+      })
   })
       
   }
